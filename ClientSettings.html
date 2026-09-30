@@ -72,22 +72,24 @@
                     <div class="panel-header">
                         <div class="panel-title">Personal Information</div>
                     </div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" class="form-control" value="Yukeshyuki18">
+                    <form onsubmit="event.preventDefault(); if(this.checkValidity()) { window.location.href='404.html'; } else { this.reportValidity(); } return false;">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" value="Yukeshyuki18" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" id="settingsEmailField" readonly required>
+                                <div class="setting-desc">Email cannot be changed directly for security reasons.</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+91" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" class="form-control" id="settingsEmailField" readonly>
-                            <div class="setting-desc">Email cannot be changed directly for security reasons.</div>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="tel" class="form-control" placeholder="+91">
-                        </div>
-                    </div>
-                    <div class="panel-footer"><button class="btn-primary">Save Profile</button></div>
+                        <div class="panel-footer"><button type="submit" class="btn-primary">Save Profile</button></div>
+                    </form>
                 </div>
 
                 <!-- 2. Password & 5. Notifications -->
@@ -96,15 +98,17 @@
                         <div class="panel-title">Security & Preferences</div>
                     </div>
                     <div class="form-grid">
+                        <form onsubmit="event.preventDefault(); if(this.checkValidity()) { window.location.href='404.html'; } else { this.reportValidity(); } return false;" style="display:contents">
                         <div class="form-group">
                             <label>Current Password</label>
-                            <input type="password" class="form-control" placeholder="••••••••">
+                            <input type="password" class="form-control" placeholder="••••••••" required>
                         </div>
                         <div class="form-group">
                             <label>New Password</label>
-                            <input type="password" class="form-control" placeholder="••••••••">
+                            <input type="password" class="form-control" placeholder="••••••••" required>
                         </div>
-                        <button class="btn-primary" style="margin-bottom: 2rem;">Update Password</button>
+                        <button type="submit" class="btn-primary" style="margin-bottom: 2rem; grid-column: 1 / -1;">Update Password</button>
+                    </form>
                         
                         <div style="border-top: 1px solid var(--dash-border); padding-top: 1.5rem;">
                             <div class="toggle-switch">
@@ -129,7 +133,7 @@
                 <div class="panel">
                     <div class="panel-header" style="justify-content: space-between;">
                         <div class="panel-title">Address Book</div>
-                        <button class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-plus"></i> Add New</button>
+                        <button class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="window.location.href='404.html'"><i class="fas fa-plus"></i> Add New</button>
                     </div>
                     <div style="padding: 1.5rem;">
                         <div class="address-card">
@@ -159,19 +163,19 @@
                                     <div style="font-size: 0.8rem; color:#666;">Expires 12/28</div>
                                 </div>
                             </div>
-                            <button style="border:none; background:transparent; color:#d9534f; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                            <button style="border:none; background:transparent; color:#d9534f; cursor:pointer;" onclick="window.location.href='404.html'"><i class="fas fa-trash"></i></button>
                         </div>
                         
                         <!-- Export & Danger -->
                         <div style="margin-top: 2rem; border-top: 1px solid var(--dash-border); padding-top: 1.5rem;">
                             <div style="margin-bottom: 1.5rem;">
                                 <div style="font-weight:500; margin-bottom:0.5rem;">Download Account Data</div>
-                                <button class="btn-primary" style="background:var(--dash-accent); color:var(--dash-primary);"><i class="fas fa-download"></i> Request Export JSON</button>
+                                <button class="btn-primary" style="background:var(--dash-accent); color:var(--dash-primary);" onclick="window.location.href='404.html'"><i class="fas fa-download"></i> Request Export JSON</button>
                             </div>
                             <div>
                                 <div style="font-weight:500; margin-bottom:0.5rem; color:#d9534f;">Danger Zone</div>
                                 <div class="setting-desc" style="margin-bottom: 1rem;">Permanently delete your account and all order history.</div>
-                                <button class="btn-danger">Delete Account</button>
+                                <button class="btn-danger" onclick="window.location.href='404.html'">Delete Account</button>
                             </div>
                         </div>
                     </div>
