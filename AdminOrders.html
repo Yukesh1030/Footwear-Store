@@ -40,7 +40,9 @@
     <div class="dashboard-layout">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <img src="assets/Brand-logo.webp" alt="STACKLY">
+                <a href="AdminDashboard.html">
+                    <img src="assets/Brand-logo.webp" alt="STACKLY">
+                </a>
             </div>
             <div class="sidebar-menu">
                 <a href="AdminDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
@@ -70,17 +72,17 @@
             <div class="kpi-cards g-anim">
                 <div class="kpi-card">
                     <div class="kpi-title">TODAY'S ORDERS</div>
-                    <div class="kpi-value">42</div>
+                    <div class="kpi-value" data-target="42">0</div>
                     <div class="kpi-trend">+5% vs yesterday</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">PENDING FULFILLMENT</div>
-                    <div class="kpi-value">16</div>
+                    <div class="kpi-value" data-target="16">0</div>
                     <div class="kpi-trend" style="color:#f0ad4e;">Action required</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">ESCALATIONS</div>
-                    <div class="kpi-value">2</div>
+                    <div class="kpi-value" data-target="2">0</div>
                     <div class="kpi-trend" style="color:#d9534f;">High priority</div>
                 </div>
             </div>
@@ -204,6 +206,14 @@
                 { y: 30, opacity: 0 }, 
                 { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
             );
+            
+            // Counter Animation
+            const counters = document.querySelectorAll('.kpi-value[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const obj = { val: 0 };
+                gsap.to(obj, { val: target, duration: 1.5, ease: "power2.out", onUpdate: () => { counter.innerHTML = Math.floor(obj.val).toLocaleString(); } });
+            });
         });
     </script>
 </body>

@@ -84,7 +84,9 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <img src="assets/Brand-logo.webp" alt="STACKLY">
+                <a href="AdminDashboard.html">
+                    <img src="assets/Brand-logo.webp" alt="STACKLY">
+                </a>
             </div>
             <div class="sidebar-menu">
                 <a href="AdminDashboard.html" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
@@ -115,12 +117,12 @@
             <div class="kpi-cards">
                 <div class="kpi-card">
                     <div class="kpi-title">TOTAL PRODUCTS</div>
-                    <div class="kpi-value" data-target="128">128</div>
+                    <div class="kpi-value" data-target="128">0</div>
                     <div class="kpi-trend">+12 this month</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">PENDING ORDERS</div>
-                    <div class="kpi-value" data-target="24">24</div>
+                    <div class="kpi-value" data-target="24">0</div>
                     <div class="kpi-trend" style="color: #d9534f;">8 require attention</div>
                 </div>
                 <div class="kpi-card">
@@ -172,8 +174,71 @@
                                 <option>1 YEAR</option>
                             </select>
                         </div>
-                        <div class="chart-placeholder">
-                            [ Sales Chart UI - Animated via JS ]
+                        <div class="chart-container" style="height: 300px; padding: 2rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; border-top: 1px solid var(--dash-border);">
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-primary); border-radius: 4px 4px 0 0; height: 40%;" data-height="40%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Mon</span>
+                            </div>
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-primary); border-radius: 4px 4px 0 0; height: 65%;" data-height="65%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Tue</span>
+                            </div>
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-accent); border-radius: 4px 4px 0 0; height: 90%;" data-height="90%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Wed</span>
+                            </div>
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-primary); border-radius: 4px 4px 0 0; height: 50%;" data-height="50%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Thu</span>
+                            </div>
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-primary); border-radius: 4px 4px 0 0; height: 75%;" data-height="75%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Fri</span>
+                            </div>
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-primary); border-radius: 4px 4px 0 0; height: 85%;" data-height="85%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Sat</span>
+                            </div>
+                            <div class="bar-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end;">
+                                <div class="bar g-bar" style="width: 100%; background: var(--dash-primary); border-radius: 4px 4px 0 0; height: 60%;" data-height="60%"></div>
+                                <span style="font-size: 0.75rem; color: #777;">Sun</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Revenue by Category -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Revenue by Category</div>
+                        </div>
+                        <div style="padding: 1.5rem 2rem;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem;">
+                                    <span style="font-weight: 500;">Sneakers</span>
+                                    <span>65%</span>
+                                </div>
+                                <div style="width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;">
+                                    <div class="g-progress" style="width: 65%; height: 100%; background: var(--dash-accent);" data-width="65%"></div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem;">
+                                    <span style="font-weight: 500;">Formal Wear</span>
+                                    <span>25%</span>
+                                </div>
+                                <div style="width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;">
+                                    <div class="g-progress" style="width: 25%; height: 100%; background: var(--dash-primary);" data-width="25%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem;">
+                                    <span style="font-weight: 500;">Accessories</span>
+                                    <span>10%</span>
+                                </div>
+                                <div style="width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden;">
+                                    <div class="g-progress" style="width: 10%; height: 100%; background: #ccc;" data-width="10%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,6 +364,25 @@
                 document.getElementById('userDisplay').innerText = username;
                 document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
             }
+
+            // Bar Chart Animation
+            gsap.fromTo(".g-bar", { scaleY: 0, transformOrigin: "bottom" }, { scaleY: 1, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.2 });
+            gsap.fromTo(".g-progress", { scaleX: 0, transformOrigin: "left" }, { scaleX: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.4 });
+            
+            // Counter Animation
+            const counters = document.querySelectorAll('.kpi-value[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    onUpdate: () => {
+                        counter.innerHTML = Math.floor(obj.val).toLocaleString();
+                    }
+                });
+            });
         });
     </script>
 </body>

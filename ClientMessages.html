@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        .chat-list { display: flex; flex-direction: column; }
+        .chat-item { padding: 1.5rem; border-bottom: 1px solid var(--dash-border); cursor: pointer; transition: 0.2s; }
+        .chat-item:hover { background: #fdfdfd; }
+        .chat-item.active { border-left: 4px solid var(--dash-primary); background: #f9f9f9; }
+        
+        .chat-header { padding: 1.5rem; border-bottom: 1px solid var(--dash-border); display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { height: 400px; padding: 1.5rem; overflow-y: auto; background: #fafafa; display: flex; flex-direction: column; gap: 1rem; }
+        .chat-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--dash-border); display: flex; gap: 1rem; }
+        
+        .msg-bubble { max-width: 70%; padding: 1rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; }
+        .msg-recv { background: #fff; border: 1px solid var(--dash-border); align-self: flex-start; border-bottom-left-radius: 0; }
+        .msg-sent { background: var(--dash-primary); color: #fff; align-self: flex-end; border-bottom-right-radius: 0; }
+        
+        .form-control { width: 100%; padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; font-family: var(--font-primary); }
+        .btn-primary { background: var(--dash-primary); color: #fff; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-outline { background: transparent; color: var(--dash-primary); border: 1px solid var(--dash-primary); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        
+        .quick-replies { display: flex; gap: 0.5rem; padding: 0.5rem 1.5rem; background: #fff; border-top: 1px solid var(--dash-border); overflow-x: auto; }
+        .qr-chip { padding: 0.4rem 0.8rem; background: #eee; border-radius: 16px; font-size: 0.8rem; cursor: pointer; white-space: nowrap; }
+        
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="ClientDashboard.html"><img src="assets/Brand-logo.webp" alt="STACKLY"></a>
+            </div>
+            <div class="sidebar-menu">
+                <a href="ClientDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="ClientOrders.html" class="menu-item"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                <a href="ClientWishlist.html" class="menu-item"><i class="fas fa-heart"></i> Wishlist</a>
+                <a href="ClientMessages.html" class="menu-item active"><i class="fas fa-envelope"></i> Messages</a>
+                <a href="ClientSettings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Support Center</h1>
+                </div>
+                <div class="user-profile">
+                    <span id="userDisplay" style="font-weight: 500;">Welcome, User</span>
+                    <div id="userAvatar" class="user-avatar">U</div>
+                </div>
+            </header>
+
+            <!-- 1. KPI -->
+            <div class="kpi-cards g-anim">
+                <div class="kpi-card">
+                    <div class="kpi-title">UNREAD MESSAGES</div>
+                    <div class="kpi-value" data-target="1">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">ACTIVE TICKETS</div>
+                    <div class="kpi-value" data-target="2">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">RESOLVED</div>
+                    <div class="kpi-value" data-target="14">0</div>
+                </div>
+            </div>
+
+            <div class="grid-layout g-anim">
+                <!-- 2. Chat List & 6. Ticket Status -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Inbox</div>
+                        <button class="btn-outline"><i class="fas fa-plus"></i> New</button>
+                    </div>
+                    <div class="chat-list">
+                        <div class="chat-item active">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span style="font-weight: 600;">Support Team</span>
+                                <span style="font-size: 0.75rem; color: #999;">10:42 AM</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                We're looking into your delayed package...
+                            </div>
+                            <div style="margin-top: 0.5rem;"><span class="status-badge" style="background:#fff3cd; color:#856404; font-size:0.7rem;">Ticket: Open</span></div>
+                        </div>
+                        <div class="chat-item">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                                <span style="font-weight: 600;">Returns Dept</span>
+                                <span style="font-size: 0.75rem; color: #999;">Yesterday</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Your refund has been processed successfully.
+                            </div>
+                            <div style="margin-top: 0.5rem;"><span class="status-badge" style="background:#e8f5e9; color:#2e7d32; font-size:0.7rem;">Resolved</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Chat Window & 7. Quick Replies -->
+                <div class="panel">
+                    <div class="chat-header">
+                        <div>
+                            <div style="font-weight: 600;">Support Team</div>
+                            <div style="font-size: 0.8rem; color: #2e7d32;"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Online</div>
+                        </div>
+                        <!-- 5. Order Attachment -->
+                        <button class="btn-outline"><i class="fas fa-paperclip"></i> Attach Order</button>
+                    </div>
+                    <div class="chat-body">
+                        <div class="msg-bubble msg-sent">
+                            Hi, I noticed my order #ORD-1992 has been stuck in transit for 3 days. Any updates?
+                        </div>
+                        <div class="msg-bubble msg-recv">
+                            Hello! Apologies for the delay. Let me check with our logistics partner BlueDart right now.
+                        </div>
+                        <div class="msg-bubble msg-recv">
+                            It seems there was a minor sorting issue at the hub. It is now out for delivery and should reach you by tomorrow 5 PM.
+                        </div>
+                    </div>
+                    
+                    <div class="quick-replies">
+                        <div class="qr-chip">Thank you!</div>
+                        <div class="qr-chip">Can I get a tracking link?</div>
+                        <div class="qr-chip">Cancel the order instead.</div>
+                    </div>
+                    
+                    <div class="chat-footer">
+                        <input type="text" class="form-control" placeholder="Type your message here...">
+                        <button class="btn-primary"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Support Bot / FAQ -->
+            <div class="panel g-anim" style="margin-bottom: 2rem;">
+                <div class="panel-header">
+                    <div class="panel-title">Automated FAQ Suggestions</div>
+                </div>
+                <div style="padding: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px; padding: 1rem; border: 1px solid var(--dash-border); border-radius: 6px;">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;"><i class="fas fa-undo"></i> How to initiate a return?</div>
+                        <div style="font-size: 0.85rem; color: #666;">Go to "My Orders" and click the Initiate Return button on any eligible order within 14 days.</div>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; padding: 1rem; border: 1px solid var(--dash-border); border-radius: 6px;">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;"><i class="fas fa-truck"></i> Shipping timelines?</div>
+                        <div style="font-size: 0.85rem; color: #666;">Standard shipping takes 3-5 business days. Express shipping is delivered within 48 hours.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if(toggle && sidebar) {
+                toggle.addEventListener('click', () => { sidebar.classList.toggle('active'); });
+            }
+
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = `Welcome, ${username}`;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
+
+            gsap.fromTo(".g-anim", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" });
+
+            const counters = document.querySelectorAll('.kpi-value[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const obj = { val: 0 };
+                gsap.to(obj, { val: target, duration: 1.5, ease: "power2.out", onUpdate: () => { counter.innerHTML = Math.floor(obj.val).toLocaleString(); } });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        .filter-bar { display: flex; gap: 1rem; padding: 1.5rem; border-bottom: 1px solid var(--dash-border); }
+        .form-control { padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; font-family: var(--font-primary); flex: 1; }
+        .btn-primary { background: var(--dash-primary); color: #fff; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; }
+        
+        .order-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid var(--dash-border); }
+        .order-row:last-child { border-bottom: none; }
+        
+        .tracking-line { display: flex; justify-content: space-between; position: relative; padding: 2rem; margin-top: 1rem; }
+        .tracking-line::before { content: ''; position: absolute; top: 35px; left: 10%; width: 80%; height: 2px; background: #eee; z-index: 1; }
+        .tracking-progress { position: absolute; top: 35px; left: 10%; width: 50%; height: 2px; background: var(--dash-accent); z-index: 2; }
+        .track-step { z-index: 3; text-align: center; }
+        .track-dot { width: 30px; height: 30px; background: #eee; border-radius: 50%; margin: 0 auto 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; }
+        .track-step.completed .track-dot { background: var(--dash-accent); }
+        .track-step.current .track-dot { background: var(--dash-primary); border: 2px solid var(--dash-accent); }
+        
+        .btn-outline { background: transparent; color: var(--dash-primary); border: 1px solid var(--dash-primary); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        
+        .product-mini { display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--dash-border); }
+        .pm-img { width: 50px; height: 50px; background: #f0f0f0; border-radius: 4px; }
+        
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="ClientDashboard.html"><img src="assets/Brand-logo.webp" alt="STACKLY"></a>
+            </div>
+            <div class="sidebar-menu">
+                <a href="ClientDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="ClientOrders.html" class="menu-item active"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                <a href="ClientWishlist.html" class="menu-item"><i class="fas fa-heart"></i> Wishlist</a>
+                <a href="ClientMessages.html" class="menu-item"><i class="fas fa-envelope"></i> Messages</a>
+                <a href="ClientSettings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Order History</h1>
+                </div>
+                <div class="user-profile">
+                    <span id="userDisplay" style="font-weight: 500;">Welcome, User</span>
+                    <div id="userAvatar" class="user-avatar">U</div>
+                </div>
+            </header>
+
+            <!-- 1. KPI Metrics -->
+            <div class="kpi-cards g-anim">
+                <div class="kpi-card">
+                    <div class="kpi-title">TOTAL ORDERS</div>
+                    <div class="kpi-value" data-target="12">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">IN TRANSIT</div>
+                    <div class="kpi-value" data-target="1">0</div>
+                    <div class="kpi-trend" style="color:var(--dash-accent);">Arriving soon</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">TOTAL SPENT</div>
+                    <div class="kpi-value" style="font-size: 1.8rem;">₹42,500</div>
+                </div>
+            </div>
+
+            <!-- 2. Search & 3. Active Delivery -->
+            <div class="panel g-anim">
+                <div class="filter-bar">
+                    <input type="text" class="form-control" placeholder="Search orders by ID...">
+                    <select class="form-control">
+                        <option>Last 30 Days</option>
+                        <option>Last 6 Months</option>
+                        <option>2025</option>
+                    </select>
+                </div>
+                <div class="panel-header">
+                    <div class="panel-title">Active Delivery: #ORD-2048</div>
+                </div>
+                <div class="tracking-line">
+                    <div class="tracking-progress"></div>
+                    <div class="track-step completed">
+                        <div class="track-dot"><i class="fas fa-check"></i></div>
+                        <div style="font-size: 0.8rem;">Ordered</div>
+                    </div>
+                    <div class="track-step completed">
+                        <div class="track-dot"><i class="fas fa-box"></i></div>
+                        <div style="font-size: 0.8rem;">Packed</div>
+                    </div>
+                    <div class="track-step current">
+                        <div class="track-dot"><i class="fas fa-truck"></i></div>
+                        <div style="font-size: 0.8rem;">Shipped</div>
+                    </div>
+                    <div class="track-step">
+                        <div class="track-dot"></div>
+                        <div style="font-size: 0.8rem;">Delivered</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-layout g-anim">
+                <!-- 4. Order History & 5. Digital Invoices -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Past Orders</div>
+                    </div>
+                    <div class="order-row">
+                        <div>
+                            <div style="font-weight: 600; color: var(--dash-accent);">#ORD-1992</div>
+                            <div style="font-size: 0.85rem; color: #777;">Placed on Aug 12, 2026</div>
+                        </div>
+                        <div>₹5,499</div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-outline">Track</button>
+                            <button class="btn-outline" style="color: #666; border-color: #ccc;"><i class="fas fa-file-invoice"></i> Invoice</button>
+                        </div>
+                    </div>
+                    <div class="order-row">
+                        <div>
+                            <div style="font-weight: 600; color: var(--dash-accent);">#ORD-1845</div>
+                            <div style="font-size: 0.85rem; color: #777;">Placed on Jul 04, 2026</div>
+                        </div>
+                        <div>₹12,800</div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-outline">Track</button>
+                            <button class="btn-outline" style="color: #666; border-color: #ccc;"><i class="fas fa-file-invoice"></i> Invoice</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Returns & 7. Buy Again -->
+                <div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Initiate Return</div>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <select class="form-control" style="margin-bottom: 1rem;">
+                                <option>Select Eligible Order...</option>
+                                <option>#ORD-1992 (Delivered 3 days ago)</option>
+                            </select>
+                            <button class="btn-primary" style="width: 100%;">Start Process</button>
+                        </div>
+                    </div>
+                    
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Buy Again</div>
+                        </div>
+                        <div class="product-mini">
+                            <div class="pm-img"></div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Urban Runner X</div>
+                                <div style="color: var(--dash-primary); font-size: 0.85rem; margin-top: 0.2rem;">₹5,499</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if(toggle && sidebar) {
+                toggle.addEventListener('click', () => { sidebar.classList.toggle('active'); });
+            }
+
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = `Welcome, ${username}`;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
+
+            gsap.fromTo(".g-anim", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" });
+
+            const counters = document.querySelectorAll('.kpi-value[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const obj = { val: 0 };
+                gsap.to(obj, { val: target, duration: 1.5, ease: "power2.out", onUpdate: () => { counter.innerHTML = Math.floor(obj.val).toLocaleString(); } });
+            });
+        });
+    </script>
+</body>
+</html>
