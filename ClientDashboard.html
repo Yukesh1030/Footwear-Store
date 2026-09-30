@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portal - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .btn-view {
+            padding: 0.5rem 1rem;
+            background: var(--dash-primary);
+            color: var(--dash-surface);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .btn-view:hover {
+            background: var(--dash-accent);
+        }
+
+        .btn-remove {
+            background: transparent;
+            color: #d9534f;
+            border: 1px solid #d9534f;
+        }
+        
+        .btn-remove:hover {
+            background: #d9534f;
+            color: white;
+        }
+
+        /* Order Tracking */
+        .tracking-container {
+            padding: 2rem;
+        }
+
+        .tracking-line {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .tracking-line::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #eee;
+            z-index: 1;
+        }
+
+        .tracking-progress {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 75%; /* Simulating progress */
+            height: 2px;
+            background: var(--dash-accent);
+            z-index: 2;
+        }
+
+        .track-step {
+            z-index: 3;
+            text-align: center;
+            width: 80px;
+        }
+
+        .track-dot {
+            width: 32px;
+            height: 32px;
+            background: #eee;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .track-step.completed .track-dot { background: var(--dash-accent); }
+        .track-step.current .track-dot { background: var(--dash-primary); border: 2px solid var(--dash-accent); }
+        
+        .track-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Product Cards Mini */
+        .product-mini {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--dash-border);
+        }
+
+        .product-mini:last-child { border-bottom: none; }
+
+        .pm-img {
+            width: 60px;
+            height: 60px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .pm-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .pm-info { flex: 1; }
+        .pm-title { font-weight: 600; margin-bottom: 0.2rem; }
+        .pm-price { color: var(--dash-primary); font-size: 0.9rem; }
+        
+        .pm-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        /* Messages */
+        .message-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--dash-border);
+        }
+        .message-item:last-child { border-bottom: none; }
+        .msg-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
+        .msg-desc { font-size: 0.85rem; color: var(--dash-text-light); }
+
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .tracking-line { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .tracking-line::before, .tracking-progress { width: 2px; height: 100%; top: 0; left: 15px; }
+            .track-step { display: flex; align-items: center; width: auto; gap: 1rem; text-align: left; }
+            .track-dot { margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="#" class="menu-item"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                <a href="#" class="menu-item"><i class="fas fa-heart"></i> Wishlist</a>
+                <a href="#" class="menu-item"><i class="fas fa-envelope"></i> Messages</a>
+                <a href="#" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Client Portal</h1>
+                </div>
+                <div class="user-profile">
+                    <span style="font-weight: 500;">Welcome, Yukeshyuki18</span>
+                    <div class="user-avatar">Y</div>
+                </div>
+            </header>
+
+            <!-- KPI Cards -->
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-title">ACTIVE ORDER</div>
+                    <div class="kpi-value" style="font-size: 1.8rem;">Urban Runner X</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">STATUS</div>
+                    <div class="kpi-value" style="font-size: 1.8rem; color:#B08D57;">Out for Delivery</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">EXPECTED DELIVERY</div>
+                    <div class="kpi-value" style="font-size: 1.8rem;">Oct 03, 2026</div>
+                </div>
+            </div>
+
+            <!-- Order Tracking (Active Order) -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">Order Tracking - #ORD-1024</div>
+                </div>
+                <div class="tracking-container">
+                    <div class="tracking-line">
+                        <div class="tracking-progress"></div>
+                        <div class="track-step completed">
+                            <div class="track-dot"><i class="fas fa-check"></i></div>
+                            <div class="track-label">Confirmed</div>
+                        </div>
+                        <div class="track-step completed">
+                            <div class="track-dot"><i class="fas fa-box"></i></div>
+                            <div class="track-label">Packed</div>
+                        </div>
+                        <div class="track-step completed">
+                            <div class="track-dot"><i class="fas fa-truck"></i></div>
+                            <div class="track-label">Shipped</div>
+                        </div>
+                        <div class="track-step current">
+                            <div class="track-dot"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="track-label">Out for Delivery</div>
+                        </div>
+                        <div class="track-step">
+                            <div class="track-dot"></div>
+                            <div class="track-label">Delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-layout">
+                <!-- Left Column -->
+                <div class="col-left">
+                    <!-- My Orders -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">My Orders</div>
+                            <button class="btn-refresh" id="refreshOrders"><i class="fas fa-sync-alt"></i> REFRESH</button>
+                        </div>
+                        <div id="clientOrdersList">
+                            <div class="list-row row-anim">
+                                <div>
+                                    <div style="font-weight:600;">Urban Runner X</div>
+                                    <div style="font-size:0.8rem; color:#777;">#ORD-1024 • ₹5,499</div>
+                                </div>
+                                <div><span class="status-badge" style="background:#fff3cd; color:#856404;">Out for Delivery</span></div>
+                                <div><button class="btn-view">VIEW</button></div>
+                            </div>
+                            <div class="list-row row-anim">
+                                <div>
+                                    <div style="font-weight:600;">Street Classic</div>
+                                    <div style="font-size:0.8rem; color:#777;">#ORD-1018 • ₹4,299</div>
+                                </div>
+                                <div><span class="status-badge status-delivered">Delivered</span></div>
+                                <div><button class="btn-view">VIEW</button></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wishlist -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">My Wishlist</div>
+                        </div>
+                        <div>
+                            <div class="product-mini w-card">
+                                <div class="pm-img"><img src="assets/Sports.webp" alt="Pro"></div>
+                                <div class="pm-info">
+                                    <div class="pm-title">Urban Runner Pro</div>
+                                    <div class="pm-price">₹6,499</div>
+                                </div>
+                                <div class="pm-actions">
+                                    <button class="btn-view">VIEW</button>
+                                    <button class="btn-view btn-remove"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-mini w-card">
+                                <div class="pm-img"><img src="assets/Casual.webp" alt="Classic"></div>
+                                <div class="pm-info">
+                                    <div class="pm-title">Classic Street</div>
+                                    <div class="pm-price">₹4,899</div>
+                                </div>
+                                <div class="pm-actions">
+                                    <button class="btn-view">VIEW</button>
+                                    <button class="btn-view btn-remove"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-right">
+                    <!-- Recommended For You -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Picked For You</div>
+                        </div>
+                        <div>
+                            <div class="product-mini">
+                                <div class="pm-img"><img src="assets/Sneaker.webp" alt="Runner X"></div>
+                                <div class="pm-info">
+                                    <div style="font-size:0.7rem; color:var(--dash-accent); font-weight:600;">RUNNING</div>
+                                    <div class="pm-title">Urban Runner X</div>
+                                    <div class="pm-price">₹5,499</div>
+                                </div>
+                            </div>
+                            <div class="product-mini">
+                                <div class="pm-img"><img src="assets/Slepers.webp" alt="Casual"></div>
+                                <div class="pm-info">
+                                    <div style="font-size:0.7rem; color:var(--dash-accent); font-weight:600;">CASUAL</div>
+                                    <div class="pm-title">Comfort Slides</div>
+                                    <div class="pm-price">₹1,499</div>
+                                </div>
+                            </div>
+                            <div class="product-mini">
+                                <div class="pm-img"><img src="assets/formals.webp" alt="Sport"></div>
+                                <div class="pm-info">
+                                    <div style="font-size:0.7rem; color:var(--dash-accent); font-weight:600;">FORMAL</div>
+                                    <div class="pm-title">Executive Oxford</div>
+                                    <div class="pm-price">₹7,500</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Messages</div>
+                        </div>
+                        <div>
+                            <div class="message-item">
+                                <div class="msg-title">Order #ORD-1024</div>
+                                <div class="msg-desc">Your order has been shipped and is on the way.</div>
+                            </div>
+                            <div class="message-item">
+                                <div class="msg-title">New Collection</div>
+                                <div class="msg-desc">Explore our latest footwear drop.</div>
+                            </div>
+                            <div class="message-item">
+                                <div class="msg-title">Review Request</div>
+                                <div class="msg-desc">How was your Urban Runner X?</div>
+                            </div>
+                            <div style="padding: 1rem; text-align: center; border-top: 1px solid var(--dash-border);">
+                                <a href="#" style="color:var(--dash-primary); font-weight:600; text-decoration:none; font-size:0.9rem;">VIEW ALL &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        document.getElementById('refreshOrders').addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            gsap.to(icon, { rotation: "+=360", duration: 1, ease: "power2.inOut" });
+            
+            const rows = document.querySelectorAll('.row-anim');
+            gsap.to(rows, { opacity: 0, x: -20, duration: 0.3, stagger: 0.1, onComplete: () => {
+                gsap.to(rows, { opacity: 1, x: 0, duration: 0.3, stagger: 0.1 });
+            }});
+        });
+
+        // Tracking line animation
+        gsap.from(".tracking-progress", { width: "0%", duration: 1.5, ease: "power3.out", delay: 1 });
+        
+        // Remove from wishlist animation
+        const removeBtns = document.querySelectorAll('.btn-remove');
+        removeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.w-card');
+                gsap.to(card, { x: 50, opacity: 0, height: 0, padding: 0, margin: 0, border: 'none', duration: 0.5, onComplete: () => {
+                    card.remove();
+                }});
+            });
+        });
+    </script>
+</body>
+</html>

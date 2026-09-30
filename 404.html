@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - STACKLY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .error-page {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--color-primary);
+            color: var(--color-background);
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .error-code {
+            font-size: 15rem;
+            font-family: var(--font-display);
+            line-height: 1;
+            color: var(--color-accent);
+            opacity: 0.2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            user-select: none;
+        }
+        
+        .error-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .error-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .error-content p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .error-actions {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--color-background);
+            border: 1px solid var(--color-background);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        
+        .btn-back:hover {
+            background: rgba(245, 242, 234, 0.1);
+        }
+        
+        .logo-top {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 2;
+        }
+        
+        .logo-top img {
+            height: 40px;
+            filter: invert(1);
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="logo-top">
+        <img src="assets/Brand-logo.webp" alt="STACKLY">
+    </a>
+    
+    <div class="error-page">
+        <div class="error-code">404</div>
+        <div class="error-content">
+            <h1>Lost in the Bidding</h1>
+            <p>The page or auction you are looking for does not exist, has been removed, or is temporarily unavailable.</p>
+            <div class="error-actions">
+                <button onclick="window.history.back()" class="btn-back">Go Back</button>
+                <a href="index.html" class="btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        gsap.from(".error-code", { scale: 0.5, opacity: 0, duration: 1.5, ease: "power3.out" });
+        gsap.from(".error-content h1", { y: 50, opacity: 0, duration: 1, delay: 0.5 });
+        gsap.from(".error-content p", { y: 30, opacity: 0, duration: 1, delay: 0.7 });
+        gsap.from(".error-actions", { y: 30, opacity: 0, duration: 1, delay: 0.9 });
+    </script>
+</body>
+</html>

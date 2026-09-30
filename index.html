@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STACKLY - The Auction Begins Here</title>
+    <meta name="description" content="Premium property and footwear auctions. Discover, bid, and win.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Home Specific Styles */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 4rem;
+            color: var(--color-background);
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/bg-cover-index-page.webp');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 17, 17, 0.7);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .live-auction-card {
+            position: absolute;
+            bottom: 4rem;
+            right: 4rem;
+            background: rgba(245, 242, 234, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border: 1px solid rgba(176, 141, 87, 0.3);
+            border-radius: 8px;
+            min-width: 300px;
+        }
+
+        .live-auction-card .tag {
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .live-auction-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auction-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(245, 242, 234, 0.2);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(245, 242, 234, 0.7);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-box strong {
+            font-size: 1.2rem;
+        }
+
+        /* Live Auctions Section */
+        .live-auctions {
+            background: var(--color-background);
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .property-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            border: 1px solid var(--color-accent);
+        }
+
+        .property-card-img {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .property-card:hover .property-card-img img {
+            transform: scale(1.05);
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--color-primary);
+            color: var(--color-accent);
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .live-badge::before {
+            content: '●';
+            color: red;
+            margin-right: 5px;
+            animation: blink 1s infinite alternate;
+        }
+
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.3; }
+        }
+
+        .property-info {
+            padding: 2rem;
+        }
+
+        .property-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bid-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 1.5rem;
+        }
+
+        .bid-amount {
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .bid-timer {
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+        }
+
+        .bid-btn {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .property-card:hover .bid-btn {
+            background: var(--color-accent);
+        }
+
+        /* How it works */
+        .how-it-works {
+            background: var(--color-primary);
+            color: var(--color-background);
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(176, 141, 87, 0.3);
+            z-index: 1;
+        }
+
+        .step-progress {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--color-accent);
+            z-index: 2;
+            transition: width 1s ease;
+        }
+
+        .step {
+            text-align: center;
+            z-index: 3;
+            width: 150px;
+            cursor: pointer;
+        }
+
+        .step-num {
+            width: 60px;
+            height: 60px;
+            background: var(--color-primary);
+            border: 1px solid var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            transition: var(--transition-smooth);
+        }
+
+        .step:hover .step-num {
+            background: var(--color-accent);
+            color: var(--color-primary);
+        }
+
+        .step h4 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .step p {
+            font-size: 0.8rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition-smooth);
+            margin-top: 10px;
+        }
+
+        .step:hover p {
+            opacity: 0.7;
+            transform: translateY(0);
+        }
+
+        /* Statistics */
+        .stats-section {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 8rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 4rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+        
+        /* Filter Section */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--color-primary);
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--color-primary);
+            color: var(--color-background);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            .live-auction-card {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin-top: 2rem;
+            }
+            .steps-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+            .steps-container::before, .step-progress { display: none; }
+            .stats-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 414px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <img src="assets/Brand-logo.webp" alt="STACKLY">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Collections.html">Collections</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="Login.html" class="btn-login">Login</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">THE NEXT PROPERTY<br>COULD BE YOURS.</h1>
+            <p class="hero-desc">Premium properties. Competitive bidding. Transparent auctions.</p>
+            <div class="hero-actions">
+                <a href="Shop.html" class="btn-primary">EXPLORE AUCTIONS</a>
+                <a href="Collections.html" class="btn-outline">VIEW PROPERTIES</a>
+            </div>
+        </div>
+        <div class="live-auction-card">
+            <span class="tag">● LIVE AUCTION</span>
+            <h3>Luxury Villa</h3>
+            <p>Chennai</p>
+            <div class="auction-stats">
+                <div class="stat-box">
+                    <span>Current Bid</span>
+                    <strong>₹1.84 Cr</strong>
+                </div>
+                <div class="stat-box" style="text-align: right;">
+                    <span>Ends In</span>
+                    <strong class="timer">02 : 18 : 43</strong>
+                </div>
+            </div>
+            <a href="Shop.html" class="btn-primary" style="width: 100%; text-align: center;">BID NOW</a>
+        </div>
+    </section>
+
+    <!-- Live Auctions -->
+    <section class="live-auctions">
+        <h2 class="section-heading">Auctions Happening Now</h2>
+        <div class="property-grid">
+            <!-- Property Card 1 -->
+            <div class="property-card">
+                <div class="property-card-img">
+                    <span class="live-badge">LIVE</span>
+                    <img src="assets/bg-cover-shop-page.webp" alt="Property">
+                </div>
+                <div class="property-info">
+                    <h3>Luxury Villa</h3>
+                    <p class="property-location">Chennai, Tamil Nadu</p>
+                    <div class="bid-details">
+                        <div>
+                            <span style="font-size: 0.8rem; color:#666;">Current Bid</span><br>
+                            <span class="bid-amount">₹1,84,00,000</span>
+                        </div>
+                        <div class="bid-timer">02h 18m 43s</div>
+                    </div>
+                    <div class="property-footer">
+                        <span>24 Bids</span>
+                        <button class="bid-btn">BID NOW</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Property Card 2 -->
+            <div class="property-card">
+                <div class="property-card-img">
+                    <span class="live-badge">LIVE</span>
+                    <img src="assets/Sneaker.webp" alt="Property">
+                </div>
+                <div class="property-info">
+                    <h3>STACKLY RUNNER 01</h3>
+                    <p class="property-location">Limited Edition</p>
+                    <div class="bid-details">
+                        <div>
+                            <span style="font-size: 0.8rem; color:#666;">Current Bid</span><br>
+                            <span class="bid-amount">₹8,000</span>
+                        </div>
+                        <div class="bid-timer">01h 45m 12s</div>
+                    </div>
+                    <div class="property-footer">
+                        <span>12 Bids</span>
+                        <button class="bid-btn">BID NOW</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Property Card 3 -->
+            <div class="property-card">
+                <div class="property-card-img">
+                    <span class="live-badge">LIVE</span>
+                    <img src="assets/Boot.webp" alt="Property">
+                </div>
+                <div class="property-info">
+                    <h3>Premium Leather Boots</h3>
+                    <p class="property-location">Classic Collection</p>
+                    <div class="bid-details">
+                        <div>
+                            <span style="font-size: 0.8rem; color:#666;">Current Bid</span><br>
+                            <span class="bid-amount">₹12,500</span>
+                        </div>
+                        <div class="bid-timer">00h 59m 30s</div>
+                    </div>
+                    <div class="property-footer">
+                        <span>38 Bids</span>
+                        <button class="bid-btn">BID NOW</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties & Filters -->
+    <section>
+        <h2 class="section-heading">Exceptional Properties. Open to Bidding.</h2>
+        <div class="filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Residential</button>
+            <button class="filter-btn">Commercial</button>
+            <button class="filter-btn">Luxury</button>
+            <button class="filter-btn">Footwear</button>
+        </div>
+        <div class="property-grid">
+            <!-- Add 3 more cards -->
+            <div class="property-card">
+                <div class="property-card-img">
+                    <img src="assets/Casual.webp" alt="Casual">
+                </div>
+                <div class="property-info">
+                    <h3>Urban Casual</h3>
+                    <p class="property-location">Upcoming</p>
+                    <div class="bid-details">
+                        <div>
+                            <span style="font-size: 0.8rem; color:#666;">Starting Bid</span><br>
+                            <span class="bid-amount">₹4,000</span>
+                        </div>
+                        <div class="bid-timer">Starts in 2 Days</div>
+                    </div>
+                </div>
+            </div>
+            <div class="property-card">
+                <div class="property-card-img">
+                    <img src="assets/formals.webp" alt="Formals">
+                </div>
+                <div class="property-info">
+                    <h3>Executive Formals</h3>
+                    <p class="property-location">Upcoming</p>
+                    <div class="bid-details">
+                        <div>
+                            <span style="font-size: 0.8rem; color:#666;">Starting Bid</span><br>
+                            <span class="bid-amount">₹6,000</span>
+                        </div>
+                        <div class="bid-timer">Starts in 3 Days</div>
+                    </div>
+                </div>
+            </div>
+            <div class="property-card">
+                <div class="property-card-img">
+                    <img src="assets/Sports.webp" alt="Sports">
+                </div>
+                <div class="property-info">
+                    <h3>Performance Pro</h3>
+                    <p class="property-location">Upcoming</p>
+                    <div class="bid-details">
+                        <div>
+                            <span style="font-size: 0.8rem; color:#666;">Starting Bid</span><br>
+                            <span class="bid-amount">₹5,500</span>
+                        </div>
+                        <div class="bid-timer">Starts in 5 Days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Auction Works -->
+    <section class="how-it-works">
+        <h2 class="section-heading">From Discovery to Ownership</h2>
+        <div class="steps-container">
+            <div class="step-progress"></div>
+            <div class="step">
+                <div class="step-num">01</div>
+                <h4>DISCOVER</h4>
+                <p>Find the perfect property or item.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <h4>VERIFY</h4>
+                <p>Review details and documents.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">03</div>
+                <h4>REGISTER</h4>
+                <p>Create an account to bid.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">04</div>
+                <h4>BID</h4>
+                <p>Place your competitive bids.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">05</div>
+                <h4>WIN</h4>
+                <p>Secure your winning item.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="stats-section">
+        <div class="stat-item">
+            <h3 class="counter" data-target="250">0</h3>
+            <p>Property Value (Cr+)</p>
+        </div>
+        <div class="stat-item">
+            <h3 class="counter" data-target="1200">0</h3>
+            <p>Properties Auctioned</p>
+        </div>
+        <div class="stat-item">
+            <h3 class="counter" data-target="8500">0</h3>
+            <p>Registered Bidders</p>
+        </div>
+        <div class="stat-item">
+            <h3 class="counter" data-target="96">0</h3>
+            <p>Successful Auctions (%)</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col footer-brand">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+                <p>Premium properties. Competitive bidding. Transparent auctions.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Shop.html">Shop</a></li>
+                    <li><a href="Collections.html">Collections</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="404.html">FAQ</a></li>
+                    <li><a href="404.html">Terms of Service</a></li>
+                    <li><a href="404.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="404.html"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="404.html"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="404.html"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 STACKLY. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- GSAP & Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Hero Animations
+        gsap.from(".hero-title", { y: 100, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.5 });
+        gsap.from(".hero-desc", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 1 });
+        gsap.from(".hero-actions", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 1.2 });
+        gsap.from(".live-auction-card", { x: 100, opacity: 0, duration: 1, ease: "power3.out", delay: 1.5 });
+        
+        // How it works line animation
+        gsap.to(".step-progress", {
+            scrollTrigger: {
+                trigger: ".how-it-works",
+                start: "top center",
+                end: "bottom center",
+                scrub: 1
+            },
+            width: "100%",
+            ease: "none"
+        });
+
+        // Counters animation
+        const counters = document.querySelectorAll('.counter');
+        ScrollTrigger.create({
+            trigger: ".stats-section",
+            start: "top 80%",
+            onEnter: () => {
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const inc = target / 100;
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Simulate filtering with GSAP
+                gsap.fromTo(".property-card", {scale: 0.9, opacity: 0}, {scale: 1, opacity: 1, duration: 0.5, stagger: 0.1});
+            });
+        });
+    </script>
+</body>
+</html>

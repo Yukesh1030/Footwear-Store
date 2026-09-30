@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .inventory-alert {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--dash-border);
+        }
+
+        .alert-tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+        }
+
+        .tag-low { background: #fff3cd; color: #856404; }
+        .tag-out { background: #f8d7da; color: #721c24; }
+
+        .product-name { font-weight: 600; }
+        .product-meta { font-size: 0.8rem; color: var(--dash-text-light); }
+
+        .chart-placeholder {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--dash-border);
+            margin: 1.5rem;
+            color: var(--dash-text-light);
+        }
+
+        .top-product {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--dash-border);
+        }
+        
+        .top-product:last-child { border-bottom: none; }
+
+        .tp-rank {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--dash-accent);
+            width: 40px;
+        }
+
+        .tp-info { flex: 1; }
+        .tp-sales { font-weight: 600; font-size: 0.9rem; }
+
+        .notification {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--dash-border);
+        }
+        
+        .notification:last-child { border-bottom: none; }
+        
+        .notif-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .notif-desc { font-size: 0.8rem; color: var(--dash-text-light); }
+
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="#" class="menu-item"><i class="fas fa-box"></i> Products</a>
+                <a href="#" class="menu-item"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="#" class="menu-item"><i class="fas fa-users"></i> Customers</a>
+                <a href="#" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Admin Overview</h1>
+                </div>
+                <div class="user-profile">
+                    <span style="font-weight: 500;">Yukeshyuki18</span>
+                    <div class="user-avatar">Y</div>
+                </div>
+            </header>
+
+            <!-- KPI Cards -->
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-title">TOTAL PRODUCTS</div>
+                    <div class="kpi-value" data-target="128">128</div>
+                    <div class="kpi-trend">+12 this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">PENDING ORDERS</div>
+                    <div class="kpi-value" data-target="24">24</div>
+                    <div class="kpi-trend" style="color: #d9534f;">8 require attention</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">TOTAL REVENUE</div>
+                    <div class="kpi-value">₹8.42L</div>
+                    <div class="kpi-trend">+18.6% vs last month</div>
+                </div>
+            </div>
+
+            <div class="grid-layout">
+                <!-- Left Column -->
+                <div class="col-left">
+                    <!-- Recent Orders -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Recent Orders</div>
+                            <button class="btn-refresh" id="refreshOrders"><i class="fas fa-sync-alt"></i> REFRESH</button>
+                        </div>
+                        <div id="ordersList">
+                            <div class="list-row row-anim">
+                                <div><span style="color:var(--dash-text-light)">#ORD-1024</span></div>
+                                <div style="font-weight:500;">Urban Runner X</div>
+                                <div>₹5,499</div>
+                                <div><span class="status-badge status-processing">Processing</span></div>
+                            </div>
+                            <div class="list-row row-anim">
+                                <div><span style="color:var(--dash-text-light)">#ORD-1023</span></div>
+                                <div style="font-weight:500;">Street Classic</div>
+                                <div>₹4,299</div>
+                                <div><span class="status-badge status-shipped">Shipped</span></div>
+                            </div>
+                            <div class="list-row row-anim">
+                                <div><span style="color:var(--dash-text-light)">#ORD-1022</span></div>
+                                <div style="font-weight:500;">Air Flex Pro</div>
+                                <div>₹6,999</div>
+                                <div><span class="status-badge status-delivered">Delivered</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sales Analytics -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Sales Performance</div>
+                            <select style="border:none; outline:none; background:transparent; font-weight:500;">
+                                <option>7 DAYS</option>
+                                <option>30 DAYS</option>
+                                <option>3 MONTHS</option>
+                                <option>1 YEAR</option>
+                            </select>
+                        </div>
+                        <div class="chart-placeholder">
+                            [ Sales Chart UI - Animated via JS ]
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-right">
+                    <!-- Inventory Alerts -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Inventory Alerts</div>
+                        </div>
+                        <div class="inventory-alert">
+                            <div>
+                                <div class="product-name">Urban Runner X</div>
+                                <div class="product-meta">Size 8 • Only 3 left</div>
+                            </div>
+                            <span class="alert-tag tag-low">LOW STOCK</span>
+                        </div>
+                        <div class="inventory-alert">
+                            <div>
+                                <div class="product-name">Classic Leather</div>
+                                <div class="product-meta">Size 9 • Only 2 left</div>
+                            </div>
+                            <span class="alert-tag tag-low">LOW STOCK</span>
+                        </div>
+                        <div class="inventory-alert">
+                            <div>
+                                <div class="product-name">Flex Motion</div>
+                                <div class="product-meta">Size 7 • Out of stock</div>
+                            </div>
+                            <span class="alert-tag tag-out">OUT OF STOCK</span>
+                        </div>
+                    </div>
+
+                    <!-- Top Selling -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Top Selling Products</div>
+                        </div>
+                        <div class="top-product">
+                            <div class="tp-rank">01</div>
+                            <div class="tp-info">Urban Runner X</div>
+                            <div class="tp-sales">142 sold</div>
+                        </div>
+                        <div class="top-product">
+                            <div class="tp-rank">02</div>
+                            <div class="tp-info">Street Classic</div>
+                            <div class="tp-sales">118 sold</div>
+                        </div>
+                        <div class="top-product">
+                            <div class="tp-rank">03</div>
+                            <div class="tp-info">Flex Motion</div>
+                            <div class="tp-sales">96 sold</div>
+                        </div>
+                        <div class="top-product">
+                            <div class="tp-rank">04</div>
+                            <div class="tp-info">Classic Leather</div>
+                            <div class="tp-sales">81 sold</div>
+                        </div>
+                        <div class="top-product">
+                            <div class="tp-rank">05</div>
+                            <div class="tp-info">Court Pro</div>
+                            <div class="tp-sales">74 sold</div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Store Notifications</div>
+                            <button class="btn-refresh"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div class="notification">
+                            <div class="notif-title">New Order Received</div>
+                            <div class="notif-desc">Order #ORD-1024 has been placed.</div>
+                        </div>
+                        <div class="notification">
+                            <div class="notif-title" style="color:#856404;">Low Stock Alert</div>
+                            <div class="notif-desc">Urban Runner X — Size 8</div>
+                        </div>
+                        <div class="notification">
+                            <div class="notif-title">New Product Review</div>
+                            <div class="notif-desc">5-star review received for Street Classic.</div>
+                        </div>
+                        <div class="notification">
+                            <div class="notif-title" style="color:#d9534f;">Return Request</div>
+                            <div class="notif-desc">Order #ORD-1018 has requested a return.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        document.getElementById('refreshOrders').addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            gsap.to(icon, { rotation: "+=360", duration: 1, ease: "power2.inOut" });
+            
+            const rows = document.querySelectorAll('.row-anim');
+            gsap.to(rows, { opacity: 0, x: -20, duration: 0.3, stagger: 0.1, onComplete: () => {
+                gsap.to(rows, { opacity: 1, x: 0, duration: 0.3, stagger: 0.1 });
+            }});
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - STACKLY</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .collection-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            color: var(--color-background);
+        }
+        .collection-hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('assets/bg-cover-shop-page.webp'); /* using shop page bg for collection as fallback */
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        .collection-hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(17, 17, 17, 0.6);
+            z-index: -1;
+        }
+        .collection-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .collections-container {
+            padding: 6rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .collection-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .collection-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .collection-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            transition: background 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            color: #fff;
+        }
+        
+        .collection-card:hover .collection-overlay {
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .collection-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .collection-title {
+            font-size: 2.5rem;
+            font-family: var(--font-display);
+            margin-bottom: 1rem;
+        }
+        
+        .collection-desc {
+            font-size: 1rem;
+            max-width: 400px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-view {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 1px solid #fff;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+            align-self: flex-start;
+        }
+        
+        .collection-card:hover .btn-view {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+        }
+        
+        .collection-full {
+            grid-column: 1 / -1;
+            height: 600px;
+        }
+        
+        @media (max-width: 1024px) {
+            .collections-container { padding: 4rem 2rem; }
+        }
+        @media (max-width: 768px) {
+            .collections-container { grid-template-columns: 1fr; }
+            .collection-full { grid-column: 1; height: 400px; }
+            .collection-card { height: 400px; }
+            .collection-hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <img src="assets/Brand-logo.webp" alt="STACKLY">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Collections.html" style="color:var(--color-accent);">Collections</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="Login.html" class="btn-login">Login</a>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="collection-hero">
+        <div class="collection-hero-bg"></div>
+        <div class="collection-hero-overlay"></div>
+        <div>
+            <h1 class="col-title">Collections That Move With You</h1>
+        </div>
+    </section>
+
+    <div class="collections-container">
+        <!-- Collection 1 -->
+        <div class="collection-card collection-full">
+            <img src="assets/bg-cover-about-page.webp" alt="Urban Collection">
+            <div class="collection-overlay">
+                <h2 class="collection-title">Urban</h2>
+                <p class="collection-desc">Street-inspired everyday footwear designed for the modern explorer.</p>
+                <a href="404.html" class="btn-view">Explore Collection</a>
+            </div>
+        </div>
+        
+        <!-- Collection 2 -->
+        <div class="collection-card">
+            <img src="assets/Sneaker.webp" alt="Performance">
+            <div class="collection-overlay">
+                <h2 class="collection-title">Performance</h2>
+                <p class="collection-desc">Running and active footwear built for endurance and speed.</p>
+                <a href="404.html" class="btn-view">Explore Collection</a>
+            </div>
+        </div>
+        
+        <!-- Collection 3 -->
+        <div class="collection-card">
+            <img src="assets/Casual.webp" alt="Essentials">
+            <div class="collection-overlay">
+                <h2 class="collection-title">Essentials</h2>
+                <p class="collection-desc">Minimal everyday footwear for any occasion.</p>
+                <a href="404.html" class="btn-view">Explore Collection</a>
+            </div>
+        </div>
+        
+        <!-- Collection 4 -->
+        <div class="collection-card">
+            <img src="assets/formals.webp" alt="Classic">
+            <div class="collection-overlay">
+                <h2 class="collection-title">Classic</h2>
+                <p class="collection-desc">Timeless silhouettes that never go out of style.</p>
+                <a href="404.html" class="btn-view">Explore Collection</a>
+            </div>
+        </div>
+        
+        <!-- Collection 5 -->
+        <div class="collection-card">
+            <img src="assets/Boot.webp" alt="Limited Edition">
+            <div class="collection-overlay">
+                <h2 class="collection-title">Limited Edition</h2>
+                <p class="collection-desc">Special drops and exclusive collaborations.</p>
+                <a href="404.html" class="btn-view">Explore Collection</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col footer-brand">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+                <p>Premium properties. Competitive bidding. Transparent auctions.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Shop.html">Shop</a></li>
+                    <li><a href="Collections.html">Collections</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="404.html">FAQ</a></li>
+                    <li><a href="404.html">Terms of Service</a></li>
+                    <li><a href="404.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="404.html"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="404.html"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="404.html"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 STACKLY. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        gsap.from(".col-title", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.5 });
+        gsap.from(".collection-card", {
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out", delay: 0.8
+        });
+    </script>
+</body>
+</html>
