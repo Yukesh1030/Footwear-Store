@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Customers - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .grid-half { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        .customer-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid var(--dash-border); }
+        .customer-row:last-child { border-bottom: none; }
+        .cust-profile { display: flex; align-items: center; gap: 1rem; }
+        .cust-avatar { width: 40px; height: 40px; background: #eef2f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--dash-primary); }
+        .cust-name { font-weight: 600; }
+        .cust-email { font-size: 0.85rem; color: #777; }
+        
+        .vip-badge { font-size: 0.7rem; background: var(--dash-primary); color: var(--dash-accent); padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; font-weight: 600; }
+        
+        .activity-feed { padding: 1.5rem; }
+        .activity-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .activity-item:last-child { margin-bottom: 0; }
+        .act-icon { color: var(--dash-accent); margin-top: 0.2rem; }
+        .act-text { font-size: 0.9rem; }
+        .act-time { font-size: 0.8rem; color: #999; margin-top: 0.2rem; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; }
+        .form-control { width: 100%; padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; font-family: var(--font-primary); }
+        .btn-primary { background: var(--dash-primary); color: #fff; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        
+        .chart-box { height: 250px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--dash-border); margin: 1.5rem; color: #777; }
+        
+        @media (max-width: 1024px) {
+            .grid-layout, .grid-half { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .customer-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </div>
+            <div class="sidebar-menu">
+                <a href="AdminDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="AdminProducts.html" class="menu-item"><i class="fas fa-box"></i> Products</a>
+                <a href="AdminOrders.html" class="menu-item"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="AdminCustomers.html" class="menu-item active"><i class="fas fa-users"></i> Customers</a>
+                <a href="AdminSettings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Client Relations</h1>
+                </div>
+                <div class="user-profile">
+                    <span id="userDisplay" style="font-weight: 500;">Admin User</span>
+                    <div id="userAvatar" class="user-avatar">A</div>
+                </div>
+            </header>
+
+            <!-- 1. KPI -->
+            <div class="kpi-cards g-anim">
+                <div class="kpi-card">
+                    <div class="kpi-title">TOTAL USERS</div>
+                    <div class="kpi-value">8,402</div>
+                    <div class="kpi-trend">+124 this week</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">VIP CLIENTS</div>
+                    <div class="kpi-value">156</div>
+                    <div class="kpi-trend">Private desk enabled</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">ACTIVE TODAY</div>
+                    <div class="kpi-value">943</div>
+                    <div class="kpi-trend">+12% vs yesterday</div>
+                </div>
+            </div>
+
+            <div class="grid-layout g-anim">
+                <!-- 3. User Directory -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Client Database</div>
+                    </div>
+                    <div class="customer-row">
+                        <div class="cust-profile">
+                            <div class="cust-avatar">J</div>
+                            <div>
+                                <div class="cust-name">John Doe</div>
+                                <div class="cust-email">john.doe@example.com</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">Joined: Sep 2026</div>
+                        <span class="status-badge" style="background:#e8f5e9; color:#2e7d32;">Active</span>
+                    </div>
+                    <div class="customer-row">
+                        <div class="cust-profile">
+                            <div class="cust-avatar">Y</div>
+                            <div>
+                                <div class="cust-name">Yukeshyuki18 <span class="vip-badge">VIP</span></div>
+                                <div class="cust-email">yukeshyuki18@example.com</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666;">Joined: Jan 2025</div>
+                        <span class="status-badge" style="background:#e8f5e9; color:#2e7d32;">Active</span>
+                    </div>
+                </div>
+
+                <!-- 2. Add/Invite User & 7. Broadcast -->
+                <div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Invite Client</div>
+                        </div>
+                        <div class="form-grid">
+                            <input type="email" class="form-control" placeholder="Client Email Address">
+                            <select class="form-control">
+                                <option>Standard Access</option>
+                                <option>VIP Advisory Access</option>
+                            </select>
+                            <button class="btn-primary">Send Invite Link</button>
+                        </div>
+                    </div>
+                    
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Mass Broadcast</div>
+                        </div>
+                        <div class="form-grid">
+                            <input type="text" class="form-control" placeholder="Subject...">
+                            <button class="btn-primary" style="background:var(--dash-accent); color:var(--dash-primary);">Send to All Users</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Demographics, 5. VIP Segments, 6. Activity Log -->
+            <div class="grid-layout g-anim">
+                <div class="grid-half" style="margin-bottom: 0;">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Demographics</div>
+                        </div>
+                        <div class="chart-box">
+                            <i class="fas fa-globe-americas fa-3x"></i>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div class="panel-title">Top Spenders (VIP)</div>
+                        </div>
+                        <div class="activity-feed">
+                            <div style="margin-bottom:1rem;"><strong>1. Yukeshyuki18</strong> - ₹2.4L LTV</div>
+                            <div style="margin-bottom:1rem;"><strong>2. Michael S.</strong> - ₹1.8L LTV</div>
+                            <div><strong>3. Sarah C.</strong> - ₹1.1L LTV</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Live Activity Log</div>
+                    </div>
+                    <div class="activity-feed">
+                        <div class="activity-item">
+                            <div class="act-icon"><i class="fas fa-user-plus"></i></div>
+                            <div>
+                                <div class="act-text">New user registered: alex@test.com</div>
+                                <div class="act-time">2 mins ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="act-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <div>
+                                <div class="act-text">Yukeshyuki18 placed Order #ORD-2048</div>
+                                <div class="act-time">15 mins ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="act-icon"><i class="fas fa-heart"></i></div>
+                            <div>
+                                <div class="act-text">John Doe wishlisted Air Max 90</div>
+                                <div class="act-time">1 hour ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if(toggle && sidebar) {
+                toggle.addEventListener('click', () => { sidebar.classList.toggle('active'); });
+            }
+
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = username;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
+
+            gsap.fromTo(".g-anim", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+            );
+        });
+    </script>
+</body>
+</html>

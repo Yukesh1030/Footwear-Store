@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Orders - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .grid-half { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        .filter-bar { display: flex; gap: 1rem; padding: 1.5rem 2rem; background: var(--dash-surface); border-bottom: 1px solid var(--dash-border); flex-wrap: wrap; }
+        .form-control { padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; font-family: var(--font-primary); flex: 1; min-width: 150px; }
+        .btn-primary { background: var(--dash-primary); color: #fff; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+        
+        .order-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid var(--dash-border); transition: all 0.2s; }
+        .order-row:hover { background: #fdfdfd; }
+        .order-id { font-weight: 600; color: var(--dash-accent); }
+        
+        .dispute-item { padding: 1.5rem; border-bottom: 1px solid var(--dash-border); }
+        .dispute-item:last-child { border-bottom: none; }
+        .dispute-tag { font-size: 0.75rem; background: #f8d7da; color: #721c24; padding: 0.2rem 0.5rem; border-radius: 3px; font-weight: 600; margin-bottom: 0.5rem; display: inline-block; }
+        
+        .courier-status { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--dash-border); }
+        .courier-icon { width: 40px; height: 40px; border-radius: 50%; background: #eef2f5; display: flex; align-items: center; justify-content: center; color: var(--dash-primary); }
+        
+        .chart-box { height: 200px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--dash-border); margin: 1.5rem; color: #777; }
+        
+        @media (max-width: 1024px) {
+            .grid-layout, .grid-half { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .order-row { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+            .order-row div { width: 100%; display: flex; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </div>
+            <div class="sidebar-menu">
+                <a href="AdminDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="AdminProducts.html" class="menu-item"><i class="fas fa-box"></i> Products</a>
+                <a href="AdminOrders.html" class="menu-item active"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="AdminCustomers.html" class="menu-item"><i class="fas fa-users"></i> Customers</a>
+                <a href="AdminSettings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Order Processing</h1>
+                </div>
+                <div class="user-profile">
+                    <span id="userDisplay" style="font-weight: 500;">Admin User</span>
+                    <div id="userAvatar" class="user-avatar">A</div>
+                </div>
+            </header>
+
+            <!-- 1. KPI -->
+            <div class="kpi-cards g-anim">
+                <div class="kpi-card">
+                    <div class="kpi-title">TODAY'S ORDERS</div>
+                    <div class="kpi-value">42</div>
+                    <div class="kpi-trend">+5% vs yesterday</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">PENDING FULFILLMENT</div>
+                    <div class="kpi-value">16</div>
+                    <div class="kpi-trend" style="color:#f0ad4e;">Action required</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">ESCALATIONS</div>
+                    <div class="kpi-value">2</div>
+                    <div class="kpi-trend" style="color:#d9534f;">High priority</div>
+                </div>
+            </div>
+
+            <!-- 2. Advanced Filters & 7. Quick Action -->
+            <div class="panel g-anim">
+                <div class="filter-bar">
+                    <input type="text" class="form-control" placeholder="Order ID or Customer...">
+                    <input type="date" class="form-control">
+                    <select class="form-control">
+                        <option>All Statuses</option>
+                        <option>Processing</option>
+                        <option>Shipped</option>
+                    </select>
+                    <button class="btn-primary">Apply Filter</button>
+                    <button class="btn-primary" style="background:#2e8b57;">Auto-Approve Batch</button>
+                </div>
+            </div>
+
+            <!-- 3. Live Order Feed & 5. Escalated Disputes -->
+            <div class="grid-layout g-anim">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Live Transactions</div>
+                    </div>
+                    <div class="order-row">
+                        <div>
+                            <div class="order-id">#ORD-2048</div>
+                            <div style="font-size:0.85rem; color:#777;">Yukeshyuki18 • 1 item</div>
+                        </div>
+                        <div style="font-weight:600;">₹5,499</div>
+                        <div><span class="status-badge status-processing">Processing</span></div>
+                    </div>
+                    <div class="order-row">
+                        <div>
+                            <div class="order-id">#ORD-2047</div>
+                            <div style="font-size:0.85rem; color:#777;">John Doe • 2 items</div>
+                        </div>
+                        <div style="font-weight:600;">₹12,800</div>
+                        <div><span class="status-badge status-shipped">Shipped</span></div>
+                    </div>
+                    <div class="order-row">
+                        <div>
+                            <div class="order-id">#ORD-2046</div>
+                            <div style="font-size:0.85rem; color:#777;">Jane Smith • 1 item</div>
+                        </div>
+                        <div style="font-weight:600;">₹4,299</div>
+                        <div><span class="status-badge status-delivered">Delivered</span></div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Active Disputes</div>
+                    </div>
+                    <div class="dispute-item">
+                        <span class="dispute-tag">URGENT</span>
+                        <div style="font-weight:600; margin-bottom:0.2rem;">#ORD-1992 - Delayed</div>
+                        <div style="font-size:0.85rem; color:#666;">Customer requesting refund due to 3 day SLA breach on delivery.</div>
+                    </div>
+                    <div class="dispute-item">
+                        <span class="dispute-tag">FRAUD FLAG</span>
+                        <div style="font-weight:600; margin-bottom:0.2rem;">#ORD-2051 - Review</div>
+                        <div style="font-size:0.85rem; color:#666;">High risk transaction detected by payment gateway.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Courier Tracking & 6. Sales Volume -->
+            <div class="grid-half g-anim">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Courier Logistics API</div>
+                    </div>
+                    <div class="courier-status">
+                        <div class="courier-icon"><i class="fas fa-truck"></i></div>
+                        <div>
+                            <div style="font-weight:600;">BlueDart Express</div>
+                            <div style="font-size:0.85rem; color:#2e8b57;">API Connected • 98% Uptime</div>
+                        </div>
+                    </div>
+                    <div class="courier-status">
+                        <div class="courier-icon"><i class="fas fa-plane"></i></div>
+                        <div>
+                            <div style="font-weight:600;">FedEx International</div>
+                            <div style="font-size:0.85rem; color:#2e8b57;">API Connected • 100% Uptime</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Fulfillment Velocity</div>
+                    </div>
+                    <div class="chart-box">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if(toggle && sidebar) {
+                toggle.addEventListener('click', () => { sidebar.classList.toggle('active'); });
+            }
+
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = username;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
+
+            // GSAP Animations
+            gsap.fromTo(".g-anim", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+            );
+        });
+    </script>
+</body>
+</html>

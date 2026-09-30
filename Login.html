@@ -262,6 +262,9 @@
             if(isValid) {
                 document.querySelector('.btn-auth').innerText = 'Authenticating...';
                 
+                // Save username/email for the dashboard
+                localStorage.setItem('stacklyUserEmail', email);
+                
                 setTimeout(() => {
                     if(role === 'Admin') {
                         window.location.href = 'AdminDashboard.html';

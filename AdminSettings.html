@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        .form-grid { padding: 1.5rem 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 500; }
+        .form-control { width: 100%; padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; font-family: var(--font-primary); }
+        
+        .toggle-switch { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--dash-accent); }
+        input:checked + .slider:before { transform: translateX(26px); }
+        
+        .btn-primary { background: var(--dash-primary); color: #fff; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-danger { background: transparent; color: #d9534f; border: 1px solid #d9534f; padding: 0.8rem 1.5rem; border-radius: 4px; cursor: pointer; }
+        .btn-danger:hover { background: #d9534f; color: #fff; }
+        
+        .setting-desc { font-size: 0.8rem; color: #777; margin-top: 0.3rem; }
+        
+        .panel-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--dash-border); display: flex; justify-content: flex-end; }
+        
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </div>
+            <div class="sidebar-menu">
+                <a href="AdminDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="AdminProducts.html" class="menu-item"><i class="fas fa-box"></i> Products</a>
+                <a href="AdminOrders.html" class="menu-item"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="AdminCustomers.html" class="menu-item"><i class="fas fa-users"></i> Customers</a>
+                <a href="AdminSettings.html" class="menu-item active"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">System Settings</h1>
+                </div>
+                <div class="user-profile">
+                    <span id="userDisplay" style="font-weight: 500;">Admin User</span>
+                    <div id="userAvatar" class="user-avatar">A</div>
+                </div>
+            </header>
+
+            <div class="grid-layout g-anim">
+                <!-- 1. Global Store Configuration -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Global Configuration</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Store Name</label>
+                            <input type="text" class="form-control" value="STACKLY Premium Auctions">
+                        </div>
+                        <div class="form-group">
+                            <label>Default Currency</label>
+                            <select class="form-control">
+                                <option>INR (₹)</option>
+                                <option>USD ($)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Support Email</label>
+                            <input type="email" class="form-control" value="support@stackly.com">
+                        </div>
+                    </div>
+                    <div class="panel-footer"><button class="btn-primary">Save Changes</button></div>
+                </div>
+
+                <!-- 2. Payment Gateway -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Payment Gateways</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Razorpay Key ID</label>
+                            <input type="password" class="form-control" value="rzp_test_123456789">
+                        </div>
+                        <div class="form-group">
+                            <label>Razorpay Key Secret</label>
+                            <input type="password" class="form-control" value="*******************">
+                        </div>
+                        <div class="toggle-switch">
+                            <div>
+                                <label style="margin:0;">Enable Escrow Holding</label>
+                                <div class="setting-desc">Hold 10% of bid amount automatically.</div>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                    </div>
+                    <div class="panel-footer"><button class="btn-primary">Update Keys</button></div>
+                </div>
+
+                <!-- 3. Tax & Shipping & 5. Theme Customization -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Tax & Logistics</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Default Tax Rate (%)</label>
+                            <input type="number" class="form-control" value="18">
+                        </div>
+                        <div class="form-group">
+                            <label>Flat Shipping Rate (₹)</label>
+                            <input type="number" class="form-control" value="500">
+                        </div>
+                    </div>
+                    
+                    <div class="panel-header" style="border-top: 1px solid var(--dash-border);">
+                        <div class="panel-title">Theme Customization</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Primary Brand Color (Hex)</label>
+                            <input type="text" class="form-control" value="#B08D57">
+                        </div>
+                    </div>
+                    <div class="panel-footer"><button class="btn-primary">Save Changes</button></div>
+                </div>
+
+                <!-- 4. Security, 6. Notifications, 7. Backup -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Security & Notifications</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="toggle-switch">
+                            <div>
+                                <label style="margin:0;">Force 2FA for Admins</label>
+                                <div class="setting-desc">Require OTP verification on login.</div>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <div class="toggle-switch">
+                            <div>
+                                <label style="margin:0;">Automated Email Receipts</label>
+                                <div class="setting-desc">Send invoices automatically on purchase.</div>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-header" style="border-top: 1px solid var(--dash-border);">
+                        <div class="panel-title">System Backup</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="setting-desc" style="margin-bottom: 1.5rem;">Create a full dump of the database (Products, Orders, Customers).</div>
+                        <button class="btn-danger"><i class="fas fa-database"></i> Generate Backup File</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if(toggle && sidebar) {
+                toggle.addEventListener('click', () => { sidebar.classList.toggle('active'); });
+            }
+
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = username;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
+
+            gsap.fromTo(".g-anim", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+            );
+        });
+    </script>
+</body>
+</html>

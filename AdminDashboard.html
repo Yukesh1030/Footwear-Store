@@ -87,11 +87,11 @@
                 <img src="assets/Brand-logo.webp" alt="STACKLY">
             </div>
             <div class="sidebar-menu">
-                <a href="#" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="#" class="menu-item"><i class="fas fa-box"></i> Products</a>
-                <a href="#" class="menu-item"><i class="fas fa-shopping-bag"></i> Orders</a>
-                <a href="#" class="menu-item"><i class="fas fa-users"></i> Customers</a>
-                <a href="#" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="AdminDashboard.html" class="menu-item active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="AdminProducts.html" class="menu-item"><i class="fas fa-box"></i> Products</a>
+                <a href="AdminOrders.html" class="menu-item"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="AdminCustomers.html" class="menu-item"><i class="fas fa-users"></i> Customers</a>
+                <a href="AdminSettings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
             </div>
             <div class="sidebar-footer">
                 <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
@@ -106,8 +106,8 @@
                     <h1 class="page-title">Admin Overview</h1>
                 </div>
                 <div class="user-profile">
-                    <span style="font-weight: 500;">Yukeshyuki18</span>
-                    <div class="user-avatar">Y</div>
+                    <span id="userDisplay" style="font-weight: 500;">Admin User</span>
+                    <div id="userAvatar" class="user-avatar">A</div>
                 </div>
             </header>
 
@@ -279,6 +279,26 @@
             gsap.to(rows, { opacity: 0, x: -20, duration: 0.3, stagger: 0.1, onComplete: () => {
                 gsap.to(rows, { opacity: 1, x: 0, duration: 0.3, stagger: 0.1 });
             }});
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile toggle
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (toggle && sidebar) {
+                toggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            // Dynamic Username
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = username;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
         });
     </script>
 </body>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Products - STACKLY</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .grid-full { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .grid-half { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 1.5rem 2rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; font-weight: 500; }
+        .form-control { width: 100%; padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; font-family: var(--font-primary); }
+        .btn-primary { background: var(--dash-primary); color: #fff; padding: 0.8rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-outline { background: transparent; color: var(--dash-primary); padding: 0.8rem 1.5rem; border: 1px solid var(--dash-primary); border-radius: 4px; cursor: pointer; }
+        
+        .stock-item { display: flex; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid var(--dash-border); align-items: center; }
+        .stock-item:last-child { border-bottom: none; }
+        .stock-info { font-weight: 500; }
+        .stock-level { font-size: 0.85rem; padding: 0.2rem 0.6rem; border-radius: 4px; }
+        .low-stock { background: #fff3cd; color: #856404; }
+        .out-stock { background: #f8d7da; color: #721c24; }
+        
+        .chart-box { height: 250px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--dash-border); margin: 1.5rem 2rem; color: #777; }
+        .toolbar { padding: 1.5rem 2rem; display: flex; gap: 1rem; border-bottom: 1px solid var(--dash-border); }
+        .search-bar { flex: 1; padding: 0.8rem; border: 1px solid var(--dash-border); border-radius: 4px; }
+        
+        .bulk-actions { padding: 1.5rem 2rem; display: flex; gap: 1rem; }
+        
+        @media (max-width: 1024px) {
+            .grid-layout, .grid-half { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; padding: 1rem; }
+            .toolbar { flex-direction: column; }
+            .stock-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/Brand-logo.webp" alt="STACKLY">
+            </div>
+            <div class="sidebar-menu">
+                <a href="AdminDashboard.html" class="menu-item"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="AdminProducts.html" class="menu-item active"><i class="fas fa-box"></i> Products</a>
+                <a href="AdminOrders.html" class="menu-item"><i class="fas fa-shopping-bag"></i> Orders</a>
+                <a href="AdminCustomers.html" class="menu-item"><i class="fas fa-users"></i> Customers</a>
+                <a href="AdminSettings.html" class="menu-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+            <div class="sidebar-footer">
+                <a href="Login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-bars mobile-toggle" id="mobileToggle"></i>
+                    <h1 class="page-title">Products Management</h1>
+                </div>
+                <div class="user-profile">
+                    <span id="userDisplay" style="font-weight: 500;">Admin User</span>
+                    <div id="userAvatar" class="user-avatar">A</div>
+                </div>
+            </header>
+
+            <!-- Section 1: KPI Metrics -->
+            <div class="kpi-cards g-anim">
+                <div class="kpi-card">
+                    <div class="kpi-title">TOTAL INVENTORY</div>
+                    <div class="kpi-value">1,245</div>
+                    <div class="kpi-trend">+84 additions</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">LOW STOCK</div>
+                    <div class="kpi-value">18</div>
+                    <div class="kpi-trend" style="color:#d9534f;">Needs reorder</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">CATEGORIES</div>
+                    <div class="kpi-value">12</div>
+                    <div class="kpi-trend">Active categories</div>
+                </div>
+            </div>
+
+            <!-- Section 2 & 3: Add Product & Stock Monitor -->
+            <div class="grid-layout g-anim">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Add New Product</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Air Max">
+                        </div>
+                        <div class="form-group">
+                            <label>SKU</label>
+                            <input type="text" class="form-control" placeholder="e.g. SNK-102">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control">
+                                <option>Sneakers</option>
+                                <option>Formal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Price (₹)</label>
+                            <input type="number" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>
+                    <div style="padding: 0 2rem 1.5rem;">
+                        <button class="btn-primary">Add Product</button>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Stock Monitor</div>
+                    </div>
+                    <div class="stock-item">
+                        <span class="stock-info">Urban Runner X</span>
+                        <span class="stock-level low-stock">3 Left</span>
+                    </div>
+                    <div class="stock-item">
+                        <span class="stock-info">Classic Leather</span>
+                        <span class="stock-level out-stock">0 Left</span>
+                    </div>
+                    <div class="stock-item">
+                        <span class="stock-info">Zoom Freak</span>
+                        <span class="stock-level low-stock">5 Left</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4 & 5: Inventory Chart & Bulk Actions -->
+            <div class="grid-half g-anim">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Category Distribution</div>
+                    </div>
+                    <div class="chart-box">
+                        <i class="fas fa-chart-pie fa-3x"></i>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">Data Management</div>
+                    </div>
+                    <div class="bulk-actions">
+                        <button class="btn-primary"><i class="fas fa-file-export"></i> Export CSV</button>
+                        <button class="btn-outline"><i class="fas fa-file-import"></i> Import Batch</button>
+                    </div>
+                    <div style="padding: 0 2rem 1.5rem; font-size: 0.85rem; color: #666;">
+                        Easily manage your entire inventory by uploading a CSV file containing SKUs, names, categories, and prices. Ensure the schema matches the STACKLY protocol.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6 & 7: Product List & Toolbar -->
+            <div class="panel g-anim">
+                <div class="panel-header">
+                    <div class="panel-title">Inventory Directory</div>
+                </div>
+                <div class="toolbar">
+                    <input type="text" class="search-bar" placeholder="Search by SKU or Name...">
+                    <select class="form-control" style="width: 150px;">
+                        <option>All Categories</option>
+                        <option>Sneakers</option>
+                    </select>
+                </div>
+                <div class="list-row">
+                    <div style="flex:1;">
+                        <div style="font-weight:600;">Urban Runner X</div>
+                        <div style="font-size:0.8rem; color:#777;">SKU: UR-001 • Sneakers</div>
+                    </div>
+                    <div style="font-weight:600; color:var(--dash-primary);">₹5,499</div>
+                    <div style="margin-left: 2rem;">
+                        <span class="status-badge" style="background:#e8f5e9; color:#2e7d32;">In Stock</span>
+                    </div>
+                </div>
+                <div class="list-row">
+                    <div style="flex:1;">
+                        <div style="font-weight:600;">Classic Leather</div>
+                        <div style="font-size:0.8rem; color:#777;">SKU: CL-002 • Formal</div>
+                    </div>
+                    <div style="font-weight:600; color:var(--dash-primary);">₹8,999</div>
+                    <div style="margin-left: 2rem;">
+                        <span class="status-badge" style="background:#f8d7da; color:#721c24;">Out of Stock</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if(toggle && sidebar) {
+                toggle.addEventListener('click', () => { sidebar.classList.toggle('active'); });
+            }
+
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = username;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
+
+            // GSAP Animations
+            gsap.fromTo(".g-anim", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" }
+            );
+        });
+    </script>
+</body>
+</html>

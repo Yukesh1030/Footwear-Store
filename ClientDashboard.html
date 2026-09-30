@@ -177,8 +177,8 @@
                     <h1 class="page-title">Client Portal</h1>
                 </div>
                 <div class="user-profile">
-                    <span style="font-weight: 500;">Welcome, Yukeshyuki18</span>
-                    <div class="user-avatar">Y</div>
+                    <span id="userDisplay" style="font-weight: 500;">Welcome, User</span>
+                    <div id="userAvatar" class="user-avatar">U</div>
                 </div>
             </header>
 
@@ -379,6 +379,26 @@
                     card.remove();
                 }});
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile toggle
+            const toggle = document.getElementById('mobileToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (toggle && sidebar) {
+                toggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            // Dynamic Username
+            const userEmail = localStorage.getItem('stacklyUserEmail');
+            if (userEmail) {
+                const username = userEmail.split('@')[0];
+                document.getElementById('userDisplay').innerText = `Welcome, ${username}`;
+                document.getElementById('userAvatar').innerText = username.charAt(0).toUpperCase();
+            }
         });
     </script>
 </body>
