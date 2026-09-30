@@ -494,26 +494,55 @@
 
         @media (max-width: 768px) {
             .hero {
+                height: auto;
+                min-height: 100vh;
+                min-height: 100dvh;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: flex-start;
-                padding: 6rem 2rem 2rem 2rem;
+                padding: 6.5rem 1.5rem 3rem 1.5rem;
+                overflow: visible;
+                box-sizing: border-box;
             }
             .hero-content {
                 width: 100%;
                 box-sizing: border-box;
+                margin-top: 0;
             }
-            .hero-content h1 { font-size: 2.5rem; }
-            .hero-actions { flex-direction: column; width: 100%; gap: 1rem; }
-            .hero-actions a { width: 100%; text-align: center; box-sizing: border-box; }
+            .hero-content h1 {
+                font-size: clamp(2rem, 6.5vw, 2.5rem);
+                line-height: 1.15;
+                margin-bottom: 1.2rem;
+                clip-path: none;
+                word-break: break-word;
+            }
+            .hero-content p {
+                font-size: 1.05rem;
+                line-height: 1.5;
+                margin-bottom: 1.5rem;
+                max-width: 100%;
+            }
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.8rem;
+                margin-bottom: 2rem;
+            }
+            .hero-actions a {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+                padding: 0.9rem 1.5rem;
+            }
             .live-auction-card {
                 position: relative;
-                bottom: 0;
-                right: 0;
-                margin-top: 2rem;
+                bottom: auto;
+                right: auto;
+                margin-top: 0;
                 width: 100%;
                 min-width: unset;
                 box-sizing: border-box;
+                padding: 1.5rem;
             }
             .steps-container {
                 flex-direction: column;
@@ -530,11 +559,38 @@
             .editorial-bg { background-attachment: scroll; }
         }
         
-        @media (max-width: 414px) {
+        @media (max-width: 480px) {
+            .hero {
+                padding: 5.5rem 1.25rem 2.5rem 1.25rem;
+            }
+            .hero-content h1 {
+                font-size: 1.85rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            .hero-content p {
+                font-size: 0.95rem;
+                margin-bottom: 1.2rem;
+            }
+            .hero-actions {
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            .live-auction-card {
+                padding: 1.25rem;
+            }
+            .live-auction-card h3 {
+                font-size: 1.3rem;
+            }
+            .stat-box strong {
+                font-size: 1.05rem;
+            }
             .stats-section {
                 grid-template-columns: 1fr;
             }
-            .property-grid { grid-template-columns: 1fr; }
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
     </style>
@@ -898,11 +954,23 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
         
-        // Hero Animations
-        gsap.from(".hero-title", { y: 100, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.5 });
-        gsap.from(".hero-desc", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 1 });
-        gsap.from(".hero-actions", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 1.2 });
-        gsap.from(".live-auction-card", { x: 100, opacity: 0, duration: 1, ease: "power3.out", delay: 1.5 });
+        // Hero Animations (using fromTo to ensure proper rendering across all viewports)
+        gsap.fromTo(".hero-title", 
+            { y: 40, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", delay: 0.2 }
+        );
+        gsap.fromTo(".hero-desc", 
+            { y: 30, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 }
+        );
+        gsap.fromTo(".hero-actions", 
+            { y: 20, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.6 }
+        );
+        gsap.fromTo(".live-auction-card", 
+            { y: 30, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.8 }
+        );
         
         // How it works line animation
         gsap.to(".step-progress", {
