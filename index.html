@@ -357,13 +357,162 @@
             color: var(--color-background);
         }
 
+        /* 1. Brand Story */
+        .brand-story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 8rem 4rem;
+            background: var(--color-background);
+            gap: 4rem;
+            align-items: center;
+        }
+        .story-content h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+        .story-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+        .story-img {
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .story-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 2. Curated Collections */
+        .curated-collections {
+            padding: 8rem 4rem;
+            background: #fff;
+        }
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .collection-card {
+            position: relative;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .collection-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .collection-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(17,17,17,0.9));
+            color: #fff;
+        }
+        .collection-overlay h3 { font-family: var(--font-display); font-size: 1.8rem; }
+        .collection-card:hover img { transform: scale(1.05); }
+
+        /* 3. Editorial Spotlight */
+        .editorial-spotlight {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        .editorial-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('assets/bg-cover-contact-page.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        .editorial-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(17, 17, 17, 0.5);
+            z-index: -1;
+        }
+        .editorial-content h2 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 4. Testimonials */
+        .testimonials {
+            padding: 8rem 4rem;
+            background: var(--color-background);
+            text-align: center;
+        }
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        .testi-card {
+            background: #fff;
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .testi-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        .testi-author {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 1024px) {
+            .brand-story { grid-template-columns: 1fr; }
+            .collection-grid { grid-template-columns: repeat(2, 1fr); }
+            .testi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 3rem; }
+            .hero {
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem 2rem;
+            }
+            .hero-content {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-actions { flex-direction: column; width: 100%; gap: 1rem; }
+            .hero-actions a { width: 100%; text-align: center; box-sizing: border-box; }
             .live-auction-card {
                 position: relative;
                 bottom: 0;
                 right: 0;
                 margin-top: 2rem;
+                width: 100%;
+                min-width: unset;
+                box-sizing: border-box;
             }
             .steps-container {
                 flex-direction: column;
@@ -374,13 +523,19 @@
             .stats-section {
                 grid-template-columns: 1fr 1fr;
             }
+            .brand-story, .curated-collections, .testimonials { padding: 4rem 2rem; }
+            .collection-grid, .testi-grid { grid-template-columns: 1fr; }
+            .editorial-content h2 { font-size: 2.5rem; }
+            .editorial-bg { background-attachment: scroll; }
         }
         
         @media (max-width: 414px) {
             .stats-section {
                 grid-template-columns: 1fr;
             }
+            .property-grid { grid-template-columns: 1fr; }
         }
+        
     </style>
 </head>
 <body>
@@ -626,6 +781,76 @@
         </div>
     </section>
 
+    <!-- NEW SECTION 1: Brand Story -->
+    <section class="brand-story">
+        <div class="story-img g-story-elem">
+            <img src="assets/Sneaker.webp" alt="Craftsmanship">
+        </div>
+        <div class="story-content">
+            <h2 class="g-story-elem">The STACKLY Standard</h2>
+            <p class="g-story-elem">We believe that true luxury lies in the details. Every item listed on our platform is thoroughly vetted for authenticity, condition, and provenance. Our curated selection ensures that whether you are bidding on a contemporary running shoe or a classic formal leather piece, you are acquiring nothing short of perfection.</p>
+            <a href="About.html" class="btn-primary g-story-elem">DISCOVER OUR STORY</a>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 2: Curated Collections -->
+    <section class="curated-collections">
+        <h2 class="section-heading" style="text-align: center;">Curated For You</h2>
+        <div class="collection-grid">
+            <div class="collection-card g-col-card">
+                <img src="assets/Casual.webp" alt="Urban Edge">
+                <div class="collection-overlay">
+                    <h3>The Urban Edge</h3>
+                    <p>Streetwear redefining modern aesthetics.</p>
+                </div>
+            </div>
+            <div class="collection-card g-col-card">
+                <img src="assets/formals.webp" alt="Timeless Formals">
+                <div class="collection-overlay">
+                    <h3>Timeless Formals</h3>
+                    <p>Craftsmanship that commands respect.</p>
+                </div>
+            </div>
+            <div class="collection-card g-col-card">
+                <img src="assets/Sports.webp" alt="Peak Performance">
+                <div class="collection-overlay">
+                    <h3>Peak Performance</h3>
+                    <p>Engineered for the relentless athlete.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 3: Editorial Spotlight -->
+    <section class="editorial-spotlight">
+        <div class="editorial-bg"></div>
+        <div class="editorial-overlay"></div>
+        <div class="editorial-content">
+            <h2>The Minimalist Revolution</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Explore our latest editorial highlighting the power of less.</p>
+            <a href="Collections.html" class="btn-outline">READ EDITORIAL</a>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 4: Testimonials -->
+    <section class="testimonials">
+        <h2 class="section-heading">What Our Clients Say</h2>
+        <div class="testi-grid">
+            <div class="testi-card g-testi-card">
+                <p class="testi-text">"STACKLY transformed the way I collect footwear. The bidding process is transparent, thrilling, and ultimately incredibly rewarding."</p>
+                <div class="testi-author">- James R.</div>
+            </div>
+            <div class="testi-card g-testi-card">
+                <p class="testi-text">"The curation is unmatched. Finding premium, authenticated properties and rare pairs all in one place with such a beautiful interface is rare."</p>
+                <div class="testi-author">- Sarah M.</div>
+            </div>
+            <div class="testi-card g-testi-card">
+                <p class="testi-text">"I secured my dream vintage boots here. The countdown auctions are genuinely exhilarating and perfectly executed."</p>
+                <div class="testi-author">- David L.</div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -719,10 +944,27 @@
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                // Simulate filtering with GSAP
                 gsap.fromTo(".property-card", {scale: 0.9, opacity: 0}, {scale: 1, opacity: 1, duration: 0.5, stagger: 0.1});
             });
         });
+
+        // New Sections GSAP Animations (using fromTo to avoid opacity glitches)
+        gsap.fromTo(".g-story-elem", 
+            { y: 30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".brand-story", start: "top 80%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.2 }
+        );
+        gsap.fromTo(".g-col-card", 
+            { y: 50, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".curated-collections", start: "top 80%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+        gsap.fromTo(".editorial-content", 
+            { scale: 0.9, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".editorial-spotlight", start: "top 70%", toggleActions: "play none none none" }, scale: 1, opacity: 1, duration: 1.2, ease: "power2.out" }
+        );
+        gsap.fromTo(".g-testi-card", 
+            { y: 50, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".testimonials", start: "top 80%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
     </script>
 </body>
 </html>
