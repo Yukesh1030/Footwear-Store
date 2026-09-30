@@ -146,21 +146,69 @@
             gap: 2rem;
         }
 
+        /* 1. Leadership */
+        .founders-section { padding: 8rem 4rem; background: var(--color-background); text-align: center; }
+        .founders-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 4rem; }
+        .founder-card img { width: 100%; height: 400px; object-fit: cover; border-radius: 4px; margin-bottom: 1.5rem; }
+        .founder-card h3 { font-family: var(--font-display); font-size: 2.2rem; color: var(--color-primary); margin-bottom: 0.5rem; }
+        .founder-card p { color: var(--color-accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600; }
+        .founder-desc { color: #666; font-size: 0.95rem; line-height: 1.6; }
+
+        /* 2. Global Reach */
+        .global-presence { padding: 8rem 4rem; background: #111; color: #fff; display: flex; align-items: center; gap: 4rem; }
+        .global-content { flex: 1; }
+        .global-content h2 { font-family: var(--font-display); font-size: 3.5rem; color: var(--color-accent); margin-bottom: 1.5rem; }
+        .global-content p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem; line-height: 1.8; }
+        .locations { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+        .location-item h4 { font-family: var(--font-display); font-size: 1.5rem; color: #fff; margin-bottom: 0.5rem; }
+        .location-item p { font-size: 0.9rem; opacity: 0.7; margin: 0; }
+        .global-image { flex: 1; height: 500px; border-radius: 4px; overflow: hidden; }
+        .global-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+
+        /* 3. The Technology */
+        .tech-infrastructure { padding: 8rem 4rem; background: #fff; text-align: center; }
+        .tech-header h2 { font-family: var(--font-display); font-size: 3.5rem; color: var(--color-primary); margin-bottom: 1rem; }
+        .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 4rem; }
+        .tech-card { padding: 3rem 2rem; border: 1px solid #eee; border-radius: 8px; transition: var(--transition-smooth); background: #fafafa; }
+        .tech-card:hover { border-color: var(--color-accent); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .tech-card i { font-size: 2.5rem; color: var(--color-accent); margin-bottom: 1.5rem; }
+        .tech-card h3 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 1rem; }
+        .tech-card p { color: #666; font-size: 0.95rem; line-height: 1.6; }
+
+        /* 4. Ethical Sourcing */
+        .sustainability-section { padding: 8rem 4rem; background: var(--color-background); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .sust-image { height: 500px; border-radius: 8px; overflow: hidden; }
+        .sust-image img { width: 100%; height: 100%; object-fit: cover; }
+        .sust-content h2 { font-family: var(--font-display); font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--color-primary); }
+        .sust-content p { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 1.5rem; }
+
         @media (max-width: 1024px) {
             .about-section, .about-section.reverse {
                 flex-direction: column;
                 padding: 4rem 2rem;
+                box-sizing: border-box; width: 100%;
             }
-            .about-image { width: 100%; height: 400px; margin-bottom: 2rem; }
+            .about-image { width: 100%; height: 400px; margin-bottom: 2rem; box-sizing: border-box; }
             .gold-frame { display: none; }
+            
+            .founders-section, .global-presence, .tech-infrastructure, .sustainability-section { padding: 4rem 2rem; box-sizing: border-box; width: 100%; }
+            .global-presence { flex-direction: column; }
+            .sustainability-section { grid-template-columns: 1fr; gap: 2rem; }
+            .founders-grid, .tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-banner, .final-cta { box-sizing: border-box; width: 100%; padding: 4rem 2rem; }
         }
         
         @media (max-width: 768px) {
+            .about-hero { padding: 0 2rem; box-sizing: border-box; width: 100%; }
             .about-hero h1 { font-size: 3rem; }
             .stats-banner { flex-direction: column; gap: 2rem; }
             .cta-content h2 { font-size: 2.5rem; }
             .cta-actions { flex-direction: column; }
-            .cta-content { padding: 2rem; }
+            .cta-content { padding: 2rem; box-sizing: border-box; width: 100%; }
+            
+            .founders-grid, .tech-grid, .locations { grid-template-columns: 1fr; }
+            .global-image, .sust-image { height: 300px; }
+            .cta-actions a { width: 100%; box-sizing: border-box; text-align: center; }
         }
     </style>
 </head>
@@ -258,6 +306,100 @@
         </div>
     </div>
 
+    </div>
+
+    <!-- NEW SECTION 1: Leadership -->
+    <section class="founders-section">
+        <h2 style="font-family: var(--font-display); font-size: 3.5rem; color: var(--color-primary); margin-bottom: 1rem;" class="g-leader">The Visionaries</h2>
+        <p style="color: #666; max-width: 600px; margin: 0 auto;" class="g-leader">The architectural minds behind the world's most transparent auction platform.</p>
+        <div class="founders-grid">
+            <div class="founder-card g-founder">
+                <img src="assets/Casual.webp" alt="Elias Thorne">
+                <h3>Elias Thorne</h3>
+                <p>Chief Executive Officer</p>
+                <div class="founder-desc">With 15 years in luxury real estate, Elias built STACKLY to modernize high-value asset transfers.</div>
+            </div>
+            <div class="founder-card g-founder">
+                <img src="assets/Sneaker.webp" alt="Sarah Chen">
+                <h3>Sarah Chen</h3>
+                <p>Head of Curation</p>
+                <div class="founder-desc">Former archivist for premier European fashion houses, Sarah ensures every listed item is museum-grade.</div>
+            </div>
+            <div class="founder-card g-founder">
+                <img src="assets/formals.webp" alt="Marcus Vane">
+                <h3>Marcus Vane</h3>
+                <p>Chief Technology Officer</p>
+                <div class="founder-desc">Pioneered our cryptographic bidding infrastructure, guaranteeing 100% transparency.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 2: Global Reach -->
+    <section class="global-presence">
+        <div class="global-content">
+            <h2 class="g-global">Global Viewing Galleries</h2>
+            <p class="g-global">While our auctions are entirely digital, the tactile experience remains paramount. We maintain private viewing galleries in key international hubs, allowing registered bidders to inspect properties and collections in person before placing their bids.</p>
+            <div class="locations">
+                <div class="location-item g-loc">
+                    <h4>New York</h4>
+                    <p>The Financial District</p>
+                </div>
+                <div class="location-item g-loc">
+                    <h4>London</h4>
+                    <p>Mayfair</p>
+                </div>
+                <div class="location-item g-loc">
+                    <h4>Tokyo</h4>
+                    <p>Ginza</p>
+                </div>
+                <div class="location-item g-loc">
+                    <h4>Dubai</h4>
+                    <p>DIFC</p>
+                </div>
+            </div>
+        </div>
+        <div class="global-image g-global">
+            <img src="assets/bg-cover-shop-page.webp" alt="Global Galleries">
+        </div>
+    </section>
+
+    <!-- NEW SECTION 3: The Technology -->
+    <section class="tech-infrastructure">
+        <div class="tech-header">
+            <h2 class="g-tech-head">Bank-Grade Infrastructure</h2>
+            <p style="color: #666; max-width: 600px; margin: 0 auto;" class="g-tech-head">Our platform is engineered for high-stakes financial transactions.</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card g-tech">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Secure Bidding</h3>
+                <p>Every bid is cryptographically signed and recorded, ensuring total immutability and preventing bid manipulation.</p>
+            </div>
+            <div class="tech-card g-tech">
+                <i class="fas fa-bolt"></i>
+                <h3>Real-Time Latency</h3>
+                <p>Our websocket infrastructure processes bids in under 15 milliseconds, guaranteeing a perfectly synchronized countdown globally.</p>
+            </div>
+            <div class="tech-card g-tech">
+                <i class="fas fa-search-dollar"></i>
+                <h3>Fund Verification</h3>
+                <p>Automated escrow integrations ensure all active bidders have verified liquid funds, eliminating default risks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 4: Ethical Sourcing -->
+    <section class="sustainability-section">
+        <div class="sust-image g-sust">
+            <img src="assets/Boot.webp" alt="Ethical Sourcing">
+        </div>
+        <div class="sust-content">
+            <h2 class="g-sust">Ethical Provenance</h2>
+            <p class="g-sust">Luxury means nothing without responsibility. STACKLY enforces a strict ethical sourcing policy for all physical collections listed on our platform.</p>
+            <p class="g-sust">We require full supply-chain transparency from our consignors, ensuring that every leather good, textile, and material was sourced with absolute respect for human rights and environmental sustainability.</p>
+        </div>
+    </section>
+
     <!-- Final CTA -->
     <section class="final-cta">
         <div class="cta-content abt-scroll">
@@ -314,20 +456,72 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
         
-        gsap.from(".abt-anim", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.5 });
+        // Hero Section
+        gsap.fromTo(".abt-anim", 
+            { y: 50, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2 }
+        );
         
+        // General Scroll Elements (The Mission, Philosophy, Verification, Stats, Final CTA)
         const scrollElements = document.querySelectorAll('.abt-scroll');
         scrollElements.forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: "power2.out"
-            });
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 },
+                {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power2.out"
+                }
+            );
+        });
+
+        // 1. Leadership
+        gsap.fromTo(".g-leader", 
+            { y: 30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".founders-section", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+        gsap.fromTo(".g-founder", 
+            { y: 50, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".founders-grid", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+
+        // 2. Global Reach
+        gsap.fromTo(".g-global", 
+            { x: -30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".global-presence", start: "top 80%" }, x: 0, opacity: 1, duration: 0.8, stagger: 0.2 }
+        );
+        gsap.fromTo(".g-loc", 
+            { y: 20, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".locations", start: "top 85%" }, y: 0, opacity: 1, duration: 0.6, stagger: 0.1 }
+        );
+
+        // 3. The Technology
+        gsap.fromTo(".g-tech-head", 
+            { y: 30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".tech-infrastructure", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }
+        );
+        gsap.fromTo(".g-tech", 
+            { y: 50, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".tech-grid", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+
+        // 4. Ethical Sourcing
+        gsap.fromTo(".g-sust", 
+            { scale: 0.95, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".sustainability-section", start: "top 80%" }, scale: 1, opacity: 1, duration: 1, stagger: 0.2, ease: "power2.out" }
+        );
+
+        // Refresh ScrollTrigger to ensure accurate trigger points after layout
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 300);
         });
     </script>
 </body>

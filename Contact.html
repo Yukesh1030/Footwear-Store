@@ -136,14 +136,61 @@
             text-align: center;
         }
 
+        /* 1. VIP Advisory */
+        .vip-advisory { padding: 8rem 4rem; background: #111; color: #fff; display: flex; align-items: center; gap: 4rem; }
+        .vip-image { flex: 1; height: 500px; border-radius: 4px; overflow: hidden; }
+        .vip-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .vip-content { flex: 1; }
+        .vip-content h2 { font-family: var(--font-display); font-size: 3.5rem; color: var(--color-accent); margin-bottom: 1.5rem; }
+        .vip-content p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem; line-height: 1.8; }
+        .vip-contact { display: inline-block; padding: 1rem 2rem; border: 1px solid var(--color-accent); color: var(--color-accent); font-weight: 600; letter-spacing: 1px; transition: var(--transition-smooth); }
+        .vip-contact:hover { background: var(--color-accent); color: #111; }
+
+        /* 2. Press & Media */
+        .press-media { padding: 8rem 4rem; background: #fff; text-align: center; }
+        .press-header h2 { font-family: var(--font-display); font-size: 3.5rem; color: var(--color-primary); margin-bottom: 1rem; }
+        .press-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 4rem; }
+        .press-card { padding: 3rem 2rem; border-top: 2px solid #eee; text-align: left; transition: var(--transition-smooth); }
+        .press-card:hover { border-color: var(--color-accent); }
+        .press-card h3 { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 1rem; }
+        .press-card p { color: #666; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .press-card a { color: var(--color-accent); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+
+        /* 3. FAQ Section */
+        .contact-faq { padding: 8rem 4rem; background: var(--color-background); display: flex; gap: 4rem; }
+        .faq-header { flex: 1; }
+        .faq-header h2 { font-family: var(--font-display); font-size: 3.5rem; color: var(--color-primary); margin-bottom: 1.5rem; }
+        .faq-header p { color: #666; font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem; }
+        .faq-list { flex: 1.5; display: flex; flex-direction: column; gap: 1.5rem; }
+        .faq-item { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border-left: 4px solid transparent; transition: var(--transition-smooth); }
+        .faq-item:hover { border-left-color: var(--color-accent); transform: translateX(5px); }
+        .faq-item h4 { font-family: var(--font-primary); font-size: 1.1rem; margin-bottom: 1rem; color: var(--color-primary); }
+        .faq-item p { color: #666; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+        /* 4. Corporate HQ */
+        .hq-showcase { height: 600px; position: relative; display: flex; align-items: flex-end; justify-content: flex-start; padding: 4rem; color: #fff; }
+        .hq-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('assets/bg-cover-index-page.webp') center/cover; z-index: -2; }
+        .hq-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(17,17,17,0.9), transparent); z-index: -1; }
+        .hq-content { max-width: 600px; }
+        .hq-content h2 { font-family: var(--font-display); font-size: 3.5rem; margin-bottom: 1rem; color: var(--color-accent); }
+        .hq-content p { font-size: 1.1rem; opacity: 0.9; line-height: 1.8; }
+
         @media (max-width: 1024px) {
-            .contact-section { flex-direction: column; padding: 4rem 2rem; }
+            .contact-section, .vip-advisory, .press-media, .contact-faq { padding: 4rem 2rem; box-sizing: border-box; width: 100%; }
+            .contact-section { flex-direction: column; }
             .office-grid { grid-template-columns: 1fr; }
+            .vip-advisory, .contact-faq { flex-direction: column; }
+            .press-grid { grid-template-columns: repeat(2, 1fr); }
+            .hq-showcase { padding: 4rem 2rem; height: 500px; box-sizing: border-box; width: 100%; }
         }
         
         @media (max-width: 768px) {
+            .contact-hero { padding: 0 2rem; box-sizing: border-box; width: 100%; }
             .contact-hero h1 { font-size: 3rem; }
-            .contact-form-container { padding: 2rem; }
+            .contact-form-container { padding: 2rem; box-sizing: border-box; width: 100%; }
+            .press-grid { grid-template-columns: 1fr; }
+            .vip-image { height: 300px; width: 100%; box-sizing: border-box; }
+            .faq-item { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -251,6 +298,78 @@
         </div>
     </section>
 
+    </section>
+
+    <!-- NEW SECTION 1: VIP Advisory -->
+    <section class="vip-advisory">
+        <div class="vip-image g-vip">
+            <img src="assets/bg-cover-about-page.webp" alt="Private Advisory">
+        </div>
+        <div class="vip-content">
+            <h2 class="g-vip">Private Client Desk</h2>
+            <p class="g-vip">For institutional investors and high-net-worth individuals, our Private Client Desk offers bespoke acquisition strategies, discreet off-market bidding, and dedicated portfolio management.</p>
+            <a href="404.html" class="vip-contact g-vip">REQUEST ADVISORY CALLBACK</a>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 2: Press & Media -->
+    <section class="press-media">
+        <div class="press-header">
+            <h2 class="g-press-head">Press & Media Inquiries</h2>
+            <p style="color: #666;" class="g-press-head">Direct contacts for editorial, PR, and media partnerships.</p>
+        </div>
+        <div class="press-grid">
+            <div class="press-card g-press">
+                <h3>Global PR</h3>
+                <p>For general media inquiries, interviews, and platform statistics.</p>
+                <a href="mailto:pr@stackly.com">pr@stackly.com</a>
+            </div>
+            <div class="press-card g-press">
+                <h3>Brand Partnerships</h3>
+                <p>For exclusive collaborations and co-branded collection drops.</p>
+                <a href="mailto:partners@stackly.com">partners@stackly.com</a>
+            </div>
+            <div class="press-card g-press">
+                <h3>Investor Relations</h3>
+                <p>For financial reports, shareholder info, and quarterly earnings.</p>
+                <a href="mailto:ir@stackly.com">ir@stackly.com</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 3: FAQ -->
+    <section class="contact-faq">
+        <div class="faq-header">
+            <h2 class="g-faq-head">Common Inquiries</h2>
+            <p class="g-faq-head">Find immediate answers to the most frequently asked questions regarding our bidding protocols, fund verification, and property settlement.</p>
+            <a href="404.html" class="btn-primary g-faq-head" style="display: inline-block;">View Support Center</a>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item g-faq">
+                <h4>How long does buyer verification take?</h4>
+                <p>Standard KYC and fund verification typically completes within 24 hours. VIP clients receive expedited 2-hour processing.</p>
+            </div>
+            <div class="faq-item g-faq">
+                <h4>What happens if my bid wins?</h4>
+                <p>A 10% escrow hold is immediately placed. You then have 48 hours to complete the legal paperwork and initiate the remaining wire transfer.</p>
+            </div>
+            <div class="faq-item g-faq">
+                <h4>Are all physical assets authenticated?</h4>
+                <p>Yes. Every physical item (sneakers, watches) undergoes a rigorous 3-step physical authentication process by our internal experts before being listed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 4: Corporate HQ -->
+    <section class="hq-showcase">
+        <div class="hq-bg"></div>
+        <div class="hq-overlay"></div>
+        <div class="hq-content g-hq">
+            <h2>Global Headquarters</h2>
+            <p>STACKLY operates out of a state-of-the-art facility designed to house our secure servers, authentication labs, and executive teams under one roof. Our operations run 24/7/365 to ensure seamless global auction execution.</p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -291,10 +410,60 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        gsap.from(".con-anim", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.5 });
-        gsap.from(".con-scroll", { y: 50, opacity: 0, duration: 1, stagger: 0.3, ease: "power2.out", delay: 0.8 });
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Section
+        gsap.fromTo(".con-anim", 
+            { y: 50, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2 }
+        );
+        
+        // Contact Form & Offices
+        gsap.fromTo(".con-scroll", 
+            { y: 50, opacity: 0 },
+            { scrollTrigger: { trigger: ".contact-section", start: "top 80%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.3, ease: "power2.out" }
+        );
+
+        // 1. VIP Advisory
+        gsap.fromTo(".g-vip", 
+            { y: 40, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".vip-advisory", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.2 }
+        );
+
+        // 2. Press & Media
+        gsap.fromTo(".g-press-head", 
+            { y: 30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".press-media", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+        gsap.fromTo(".g-press", 
+            { y: 40, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".press-grid", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+
+        // 3. FAQ
+        gsap.fromTo(".g-faq-head", 
+            { x: -30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".contact-faq", start: "top 80%" }, x: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+        gsap.fromTo(".g-faq", 
+            { x: 30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".faq-list", start: "top 80%" }, x: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+        );
+
+        // 4. HQ Showcase
+        gsap.fromTo(".g-hq", 
+            { y: 30, opacity: 0 }, 
+            { scrollTrigger: { trigger: ".hq-showcase", start: "top 80%" }, y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+        );
+
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 300);
+        });
         
         // Form Validation
         const form = document.getElementById('contactForm');
