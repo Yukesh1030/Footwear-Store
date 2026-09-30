@@ -15,6 +15,7 @@
             text-align: center;
             position: relative;
             color: var(--color-background);
+            z-index: 1;
         }
         .contact-hero-bg {
             position: absolute;
@@ -322,17 +323,17 @@
             <div class="press-card g-press">
                 <h3>Global PR</h3>
                 <p>For general media inquiries, interviews, and platform statistics.</p>
-                <a href="mailto:pr@stackly.com">pr@stackly.com</a>
+                <a href="404.html">pr@stackly.com</a>
             </div>
             <div class="press-card g-press">
                 <h3>Brand Partnerships</h3>
                 <p>For exclusive collaborations and co-branded collection drops.</p>
-                <a href="mailto:partners@stackly.com">partners@stackly.com</a>
+                <a href="404.html">partners@stackly.com</a>
             </div>
             <div class="press-card g-press">
                 <h3>Investor Relations</h3>
                 <p>For financial reports, shareholder info, and quarterly earnings.</p>
-                <a href="mailto:ir@stackly.com">ir@stackly.com</a>
+                <a href="404.html">ir@stackly.com</a>
             </div>
         </div>
     </section>
@@ -521,10 +522,8 @@
             if(isValid) {
                 document.querySelector('.btn-submit').innerText = 'SENDING...';
                 setTimeout(() => {
-                    document.querySelector('.btn-submit').style.display = 'none';
-                    document.getElementById('successMsg').style.display = 'block';
-                    form.reset();
-                }, 1500);
+                    window.location.href = '404.html';
+                }, 1000);
             }
         });
     </script>

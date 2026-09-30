@@ -15,6 +15,7 @@
             text-align: center;
             position: relative;
             color: var(--color-background);
+            z-index: 1;
         }
         .collection-hero-bg {
             position: absolute;
@@ -293,7 +294,7 @@
         <div class="curator-content">
             <h2 class="g-curator">Curator's Note</h2>
             <p class="g-curator">"Every collection we curate is a reflection of current architectural trends, premium craftsmanship, and historical significance. We don't just auction shoes; we present wearable art. The selections you see here represent hundreds of hours of sourcing, verifying, and curating to bring you nothing but the absolute pinnacle of footwear design."</p>
-            <a href="About.html" class="btn-view g-curator" style="color: var(--color-primary); border-color: var(--color-primary);">Read Our Story</a>
+            <a href="404.html" class="btn-view g-curator" style="color: var(--color-primary); border-color: var(--color-primary);">Read Our Story</a>
         </div>
         <div class="curator-img g-curator">
             <img src="assets/bg-cover-about-page.webp" alt="Curator at work">
@@ -327,7 +328,7 @@
         <div class="designer-info">
             <h2 class="g-designer">Spotlight: Maison Vue</h2>
             <p class="g-designer">This month, we highlight the architectural genius of Maison Vue. Known for their structural heels and uncompromising leather quality, their pieces rarely hit the open market. We have secured 15 pristine pairs that will be exclusively auctioned on STACKLY.</p>
-            <a href="Shop.html" class="btn-view g-designer">View The Auction</a>
+            <a href="404.html" class="btn-view g-designer">View The Auction</a>
         </div>
         <div class="designer-gallery">
             <img src="assets/Boot.webp" alt="Maison Vue Boot" class="g-designer-img">
@@ -340,9 +341,9 @@
         <div class="cta-wrapper">
             <h2 class="g-cta">Never Miss A Drop</h2>
             <p class="g-cta">Join our private mailing list to receive 24-hour early access to view upcoming collections before public bidding opens.</p>
-            <form class="cta-form g-cta">
+            <form class="cta-form g-cta" onsubmit="event.preventDefault(); if(this.checkValidity()) { window.location.href='404.html'; } else { this.reportValidity(); } return false;">
                 <input type="email" placeholder="Enter your email address" required>
-                <button type="button">REQUEST ACCESS</button>
+                <button type="submit">REQUEST ACCESS</button>
             </form>
         </div>
     </section>
