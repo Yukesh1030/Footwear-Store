@@ -73,24 +73,26 @@
                     <div class="panel-header">
                         <div class="panel-title">Global Configuration</div>
                     </div>
-                    <div class="form-grid">
+                    <form onsubmit="event.preventDefault(); if(this.checkValidity()) { window.location.href='404.html'; } else { this.reportValidity(); } return false;">
+<div class="form-grid">
                         <div class="form-group">
                             <label>Store Name</label>
-                            <input type="text" class="form-control" value="STACKLY Premium Auctions">
+                            <input type="text" class="form-control" value="STACKLY Premium Auctions" required>
                         </div>
                         <div class="form-group">
                             <label>Default Currency</label>
-                            <select class="form-control">
+                            <select class="form-control" required>
                                 <option>INR (₹)</option>
                                 <option>USD ($)</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Support Email</label>
-                            <input type="email" class="form-control" value="support@stackly.com">
+                            <input type="email" class="form-control" value="support@stackly.com" required>
                         </div>
                     </div>
-                    <div class="panel-footer"><button class="btn-primary">Save Changes</button></div>
+                    <div class="panel-footer"><button type="submit" class="btn-primary">Save Changes</button></div>
+</form>
                 </div>
 
                 <!-- 2. Payment Gateway -->
@@ -98,14 +100,15 @@
                     <div class="panel-header">
                         <div class="panel-title">Payment Gateways</div>
                     </div>
-                    <div class="form-grid">
+                    <form onsubmit="event.preventDefault(); if(this.checkValidity()) { window.location.href='404.html'; } else { this.reportValidity(); } return false;">
+<div class="form-grid">
                         <div class="form-group">
                             <label>Razorpay Key ID</label>
-                            <input type="password" class="form-control" value="rzp_test_123456789">
+                            <input type="password" class="form-control" value="rzp_test_123456789" required>
                         </div>
                         <div class="form-group">
                             <label>Razorpay Key Secret</label>
-                            <input type="password" class="form-control" value="*******************">
+                            <input type="password" class="form-control" value="*******************" required>
                         </div>
                         <div class="toggle-switch">
                             <div>
@@ -115,7 +118,8 @@
                             <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
                         </div>
                     </div>
-                    <div class="panel-footer"><button class="btn-primary">Update Keys</button></div>
+                    <div class="panel-footer"><button type="submit" class="btn-primary">Update Keys</button></div>
+</form>
                 </div>
 
                 <!-- 3. Tax & Shipping & 5. Theme Customization -->
@@ -123,14 +127,15 @@
                     <div class="panel-header">
                         <div class="panel-title">Tax & Logistics</div>
                     </div>
-                    <div class="form-grid">
+                    <form onsubmit="event.preventDefault(); if(this.checkValidity()) { window.location.href='404.html'; } else { this.reportValidity(); } return false;">
+<div class="form-grid">
                         <div class="form-group">
                             <label>Default Tax Rate (%)</label>
-                            <input type="number" class="form-control" value="18">
+                            <input type="number" class="form-control" value="18" required>
                         </div>
                         <div class="form-group">
                             <label>Flat Shipping Rate (₹)</label>
-                            <input type="number" class="form-control" value="500">
+                            <input type="number" class="form-control" value="500" required>
                         </div>
                     </div>
                     
@@ -140,10 +145,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Primary Brand Color (Hex)</label>
-                            <input type="text" class="form-control" value="#B08D57">
+                            <input type="text" class="form-control" value="#B08D57" required>
                         </div>
                     </div>
-                    <div class="panel-footer"><button class="btn-primary">Save Changes</button></div>
+                    <div class="panel-footer"><button type="submit" class="btn-primary">Save Changes</button></div>
+</form>
                 </div>
 
                 <!-- 4. Security, 6. Notifications, 7. Backup -->
@@ -173,7 +179,7 @@
                     </div>
                     <div class="form-grid">
                         <div class="setting-desc" style="margin-bottom: 1.5rem;">Create a full dump of the database (Products, Orders, Customers).</div>
-                        <button class="btn-danger"><i class="fas fa-database"></i> Generate Backup File</button>
+                        <button class="btn-danger" onclick="window.location.href='404.html'"><i class="fas fa-database"></i> Generate Backup File</button>
                     </div>
                 </div>
             </div>
