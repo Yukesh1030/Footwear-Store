@@ -111,15 +111,95 @@
             grid-column: 1 / -1;
             height: 600px;
         }
+
+        /* 1. Curator's Note */
+        .curators-note {
+            padding: 8rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            background: #fff;
+            align-items: center;
+        }
+        .curator-img {
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .curator-img img { width: 100%; height: 100%; object-fit: cover; }
+        .curator-content h2 { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1.5rem; color: var(--color-primary); }
+        .curator-content p { font-size: 1.1rem; color: #666; margin-bottom: 2rem; line-height: 1.8; }
+
+        /* 2. Upcoming Drops */
+        .upcoming-drops {
+            padding: 8rem 4rem;
+            background: var(--color-background);
+        }
+        .drop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .drop-card {
+            background: #fff;
+            padding: 3rem;
+            border-top: 4px solid var(--color-accent);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .drop-date { color: var(--color-accent); font-weight: 600; margin-bottom: 1rem; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
+        .drop-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; }
+
+        /* 3. Designer Spotlight */
+        .designer-spotlight {
+            padding: 8rem 4rem;
+            background: #111;
+            color: #fff;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .designer-info h2 { font-family: var(--font-display); font-size: 3.5rem; color: var(--color-accent); margin-bottom: 1.5rem; }
+        .designer-info p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem; line-height: 1.8; }
+        .designer-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .designer-gallery img { width: 100%; height: 350px; object-fit: cover; border-radius: 4px; }
+
+        /* 4. Collection CTA */
+        .collection-cta {
+            padding: 8rem 4rem;
+            text-align: center;
+            background: #fff;
+        }
+        .cta-wrapper { max-width: 600px; margin: 0 auto; }
+        .cta-wrapper h2 { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1.5rem; }
+        .cta-wrapper p { color: #666; margin-bottom: 2rem; }
+        .cta-form { display: flex; gap: 1rem; justify-content: center; }
+        .cta-form input { padding: 1rem; flex: 1; border: 1px solid #ddd; border-radius: 4px; outline: none; }
+        .cta-form button { padding: 1rem 2rem; background: var(--color-primary); color: #fff; border: none; cursor: pointer; border-radius: 4px; font-weight: 600; transition: var(--transition-smooth); }
+        .cta-form button:hover { background: var(--color-accent); }
         
         @media (max-width: 1024px) {
-            .collections-container { padding: 4rem 2rem; }
+            .collections-container, .curators-note, .upcoming-drops, .designer-spotlight, .collection-cta { padding: 4rem 2rem; box-sizing: border-box; width: 100%; }
+            .curators-note { grid-template-columns: 1fr; gap: 2rem; }
+            .drop-grid { grid-template-columns: repeat(2, 1fr); }
+            .designer-spotlight { grid-template-columns: 1fr; gap: 2rem; }
         }
         @media (max-width: 768px) {
             .collections-container { grid-template-columns: 1fr; }
             .collection-full { grid-column: 1; height: 400px; }
             .collection-card { height: 400px; }
             .collection-hero h1 { font-size: 2.5rem; }
+            .collection-hero { padding: 0 2rem; box-sizing: border-box; }
+            .drop-grid { grid-template-columns: 1fr; }
+            .designer-gallery { grid-template-columns: 1fr; }
+            .cta-form { flex-direction: column; }
+            .cta-form input, .cta-form button { width: 100%; box-sizing: border-box; }
         }
     </style>
 </head>
@@ -208,6 +288,65 @@
         </div>
     </div>
 
+    <!-- 1. Curator's Note -->
+    <section class="curators-note">
+        <div class="curator-content">
+            <h2 class="g-curator">Curator's Note</h2>
+            <p class="g-curator">"Every collection we curate is a reflection of current architectural trends, premium craftsmanship, and historical significance. We don't just auction shoes; we present wearable art. The selections you see here represent hundreds of hours of sourcing, verifying, and curating to bring you nothing but the absolute pinnacle of footwear design."</p>
+            <a href="About.html" class="btn-view g-curator" style="color: var(--color-primary); border-color: var(--color-primary);">Read Our Story</a>
+        </div>
+        <div class="curator-img g-curator">
+            <img src="assets/bg-cover-about-page.webp" alt="Curator at work">
+        </div>
+    </section>
+
+    <!-- 2. Upcoming Drops -->
+    <section class="upcoming-drops">
+        <h2 style="font-family: var(--font-display); font-size: 2.5rem; text-align: center;">Upcoming Collections</h2>
+        <div class="drop-grid">
+            <div class="drop-card g-drop">
+                <div class="drop-date">Releasing Oct 15</div>
+                <div class="drop-title">The Winter Vault</div>
+                <p>Exclusive access to heavily insulated, luxury winter boots sourced from European private collections.</p>
+            </div>
+            <div class="drop-card g-drop">
+                <div class="drop-date">Releasing Nov 02</div>
+                <div class="drop-title">Archival Runners</div>
+                <p>A pristine lineup of deadstock runners from the late 90s, featuring revolutionary early tech.</p>
+            </div>
+            <div class="drop-card g-drop">
+                <div class="drop-date">Releasing Dec 01</div>
+                <div class="drop-title">Midnight Gala</div>
+                <p>The ultimate formalwear collection. Patent leathers, oxfords, and timeless elegance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Designer Spotlight -->
+    <section class="designer-spotlight">
+        <div class="designer-info">
+            <h2 class="g-designer">Spotlight: Maison Vue</h2>
+            <p class="g-designer">This month, we highlight the architectural genius of Maison Vue. Known for their structural heels and uncompromising leather quality, their pieces rarely hit the open market. We have secured 15 pristine pairs that will be exclusively auctioned on STACKLY.</p>
+            <a href="Shop.html" class="btn-view g-designer">View The Auction</a>
+        </div>
+        <div class="designer-gallery">
+            <img src="assets/Boot.webp" alt="Maison Vue Boot" class="g-designer-img">
+            <img src="assets/formals.webp" alt="Maison Vue Formal" class="g-designer-img">
+        </div>
+    </section>
+
+    <!-- 4. Collection CTA -->
+    <section class="collection-cta">
+        <div class="cta-wrapper">
+            <h2 class="g-cta">Never Miss A Drop</h2>
+            <p class="g-cta">Join our private mailing list to receive 24-hour early access to view upcoming collections before public bidding opens.</p>
+            <form class="cta-form g-cta">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="button">REQUEST ACCESS</button>
+            </form>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -248,11 +387,55 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        gsap.from(".col-title", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.5 });
-        gsap.from(".collection-card", {
-            y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out", delay: 0.8
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener("load", () => {
+            // Hero and initial collections (no scroll trigger needed for above the fold)
+            gsap.fromTo(".col-title", 
+                { y: 50, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.1 }
+            );
+            
+            gsap.fromTo(".collection-card", 
+                { y: 50, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "power2.out", delay: 0.3 }
+            );
+
+            // 1. Curator's Note
+            gsap.fromTo(".g-curator", 
+                { y: 40, opacity: 0 }, 
+                { scrollTrigger: { trigger: ".curators-note", start: "top 80%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.2 }
+            );
+
+            // 2. Upcoming Drops
+            gsap.fromTo(".g-drop", 
+                { y: 40, opacity: 0 }, 
+                { scrollTrigger: { trigger: ".upcoming-drops", start: "top 80%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+            );
+
+            // 3. Designer Spotlight
+            gsap.fromTo(".g-designer", 
+                { x: -40, opacity: 0 }, 
+                { scrollTrigger: { trigger: ".designer-spotlight", start: "top 80%", toggleActions: "play none none none" }, x: 0, opacity: 1, duration: 0.8, stagger: 0.2 }
+            );
+            gsap.fromTo(".g-designer-img", 
+                { scale: 0.9, opacity: 0 }, 
+                { scrollTrigger: { trigger: ".designer-spotlight", start: "top 70%", toggleActions: "play none none none" }, scale: 1, opacity: 1, duration: 1, stagger: 0.2, ease: "power2.out" }
+            );
+
+            // 4. Collection CTA
+            gsap.fromTo(".g-cta", 
+                { y: 30, opacity: 0 }, 
+                { scrollTrigger: { trigger: ".collection-cta", start: "top 85%", toggleActions: "play none none none" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }
+            );
+
+            // Refresh ScrollTrigger to ensure accurate trigger points after layout
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 300);
         });
     </script>
 </body>
