@@ -7,7 +7,22 @@ if (hamburger) {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         navLinks.classList.toggle('active');
-        if(navActions) navActions.classList.toggle('active');
+        if (navActions) navActions.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    });
+}
+
+// Close mobile menu when any nav link is clicked
+if (navLinks) {
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (hamburger && hamburger.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                if (navActions) navActions.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
     });
 }
 
